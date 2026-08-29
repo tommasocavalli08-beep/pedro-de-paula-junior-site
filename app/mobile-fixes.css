@@ -1,9 +1,10 @@
 /* Small responsive corrections only — keeps the existing visual system intact. */
 html,body{max-width:100%;overflow-x:hidden}main,section,article,div,header,footer,nav{min-width:0}h1,h2,h3,p,a,strong,small,span,li,summary{overflow-wrap:break-word;word-break:normal}.hero-copy,.story-copy,.split-copy,.exam-content,.service-hero-copy,.section-head,.faq-heading{min-width:0}.cover{image-rendering:auto;backface-visibility:hidden}
 
-/* The previous surgery photo was the narrowest source in the set. Re-use the sharper surgical/endoscopy asset already present in the project for this large block. */
-.organic-image.surgery{background:url('/images/pedro-endoscopy.webp') center 40%/cover no-repeat}
-.organic-image.surgery>img{opacity:0}
+/* NovaWeb credit — same treatment used on the Claudia site. */
+.made-by-wrap{display:flex;justify-content:center;padding:18px max(6vw,28px) 20px;background:#25312b;border-top:1px solid rgba(255,255,255,.08)}
+.made-by-badge{display:inline-flex;align-items:center;gap:8px;padding:6px 10px;border:1px solid rgba(255,255,255,.13);border-radius:999px;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.72)}
+.made-by-logo{display:inline-flex;align-items:center;background:#000;border-radius:999px;padding:4px 10px}.made-by-logo img{display:block;width:72px;height:auto}
 
 @media(max-width:800px){
   .hero,.section,.story-section,.split-care,.faq-section,.service-page{width:100%;max-width:100%}
@@ -18,6 +19,21 @@ html,body{max-width:100%;overflow-x:hidden}main,section,article,div,header,foote
   .card-bottom{right:3%;width:auto}
   .service-card{overflow:visible}
   .service-card h3{max-width:100%;width:100%;white-space:normal;overflow:visible;text-overflow:clip;display:block;line-height:1.08;hyphens:none}
+
+  /* Screenshot fix: no horizontally clipped “Endoscopia dige…” on phones. */
+  .marquee{padding:12px 14px;overflow:hidden}
+  .marquee-track{display:block;width:100%;animation:none!important;transform:none!important}
+  .marquee-set{width:100%;padding:0;gap:8px 12px}
+  .marquee-set:first-child{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+  .marquee-set:nth-child(2){display:none}
+  .marquee-set i{display:none}
+  .marquee-set span{display:block;min-width:0;max-width:100%;padding:7px 3px;white-space:normal;text-align:center;font-size:9px;line-height:1.3;letter-spacing:.075em;overflow:visible;text-overflow:clip;overflow-wrap:normal}
+
+  /* Keep the large photos sharp instead of stretching them across an oversized mobile frame. */
+  .organic-image.landscape{height:min(520px,136vw);max-width:380px;margin-inline:auto}
+  .organic-image.surgery{height:min(540px,140vw);max-width:380px;margin-inline:auto}
+  .exam-photo{min-height:500px;max-height:560px}
+
   .exam-links>a,.exam-static{grid-template-columns:34px minmax(0,1fr) 18px;gap:10px}
   .exam-links div{min-width:0}
   .exam-links strong{display:block;white-space:normal;overflow:visible;text-overflow:clip;max-width:100%;line-height:1.25;overflow-wrap:normal;word-break:normal}
@@ -28,6 +44,7 @@ html,body{max-width:100%;overflow-x:hidden}main,section,article,div,header,foote
   summary strong{font-size:16px;line-height:1.35}
   details p{padding-left:40px;padding-right:8px}
   .service-back a,.service-footer p,.footer-contact a,.footer-bottom p{overflow-wrap:anywhere}
+  .made-by-wrap{padding-bottom:82px}
 }
 
 @media(max-width:390px){
