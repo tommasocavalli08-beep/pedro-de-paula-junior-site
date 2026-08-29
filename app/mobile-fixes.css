@@ -1,0 +1,39 @@
+/* Small responsive corrections only — keeps the existing visual system intact. */
+html,body{max-width:100%;overflow-x:hidden}main,section,article,div,header,footer,nav{min-width:0}h1,h2,h3,p,a,strong,small,span,li,summary{overflow-wrap:break-word;word-break:normal}.hero-copy,.story-copy,.split-copy,.exam-content,.service-hero-copy,.section-head,.faq-heading{min-width:0}.cover{image-rendering:auto;backface-visibility:hidden}
+
+@media(max-width:800px){
+  .hero,.section,.story-section,.split-care,.faq-section,.service-page{width:100%;max-width:100%}
+  .hero-copy,.story-copy,.split-copy,.exam-content,.service-hero-copy,.section-head,.faq-heading{width:100%;max-width:100%}
+  .hero h1{font-size:clamp(43px,13vw,62px);line-height:.98;letter-spacing:-.055em}
+  .section-head h2,.story-copy h2,.split-copy h2,.exam-content h2,.faq-heading h2{font-size:clamp(37px,10.8vw,54px);line-height:1}
+  .service-hero-copy h1{font-size:clamp(43px,12.4vw,62px);line-height:.98}
+  .final-cta h2{font-size:clamp(41px,11.7vw,60px);line-height:.98}
+  .hero-visual{width:100%;max-width:100%}
+  .float-card{max-width:min(78vw,290px)}
+  .float-card strong{display:block;line-height:1.25}
+  .card-bottom{right:3%;width:auto}
+  .service-card h3{max-width:none}
+  .exam-links>a,.exam-static{grid-template-columns:34px minmax(0,1fr) 18px;gap:10px}
+  .exam-links strong,.exam-links small{overflow-wrap:anywhere}
+  .location-card h3{font-size:clamp(38px,11vw,54px)}
+  .location-actions a{max-width:100%;overflow-wrap:anywhere}
+  summary{grid-template-columns:30px minmax(0,1fr) 20px;gap:10px}
+  summary strong{font-size:16px;line-height:1.35}
+  details p{padding-left:40px;padding-right:8px}
+  .service-back a,.service-footer p,.footer-contact a,.footer-bottom p{overflow-wrap:anywhere}
+}
+
+@media(max-width:390px){
+  .nav-shell{width:calc(100% - 12px);padding-right:8px;padding-left:8px}
+  .brand{gap:8px;min-width:0}.brand-symbol{flex:0 0 36px;width:36px;height:36px}.brand>span:last-child{min-width:0}.brand strong{font-size:13px;white-space:nowrap}.brand small{font-size:7.5px;letter-spacing:.11em;white-space:nowrap}
+  .service-nav .nav-cta{padding:10px 11px;font-size:11px;border-radius:13px;white-space:nowrap}
+  .hero{padding-left:14px;padding-right:14px}.section,.story-section,.split-care,.faq-section{padding-left:14px;padding-right:14px}
+  .hero h1{font-size:clamp(40px,12.5vw,52px)}
+  .credentials span{font-size:9px;padding:7px 8px}
+  .float-card{padding:12px 13px}.float-card strong{font-size:11px}.float-card small{font-size:8px}
+  .image-badge{right:5px;left:5px;width:auto;max-width:280px}
+  .location-card{padding:23px}.location-top{gap:12px}.location-card h3{font-size:38px}
+  .final-actions a{width:100%}
+}
+
+@media(max-width:340px){.brand small{display:none}.hero h1{font-size:39px}.service-hero-copy h1{font-size:40px}.final-cta h2{font-size:39px}}
