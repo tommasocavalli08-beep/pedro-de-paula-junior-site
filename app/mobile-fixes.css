@@ -1,20 +1,27 @@
 /* Small responsive corrections only — keeps the existing visual system intact. */
 html,body{max-width:100%;overflow-x:hidden}main,section,article,div,header,footer,nav{min-width:0}h1,h2,h3,p,a,strong,small,span,li,summary{overflow-wrap:break-word;word-break:normal}.hero-copy,.story-copy,.split-copy,.exam-content,.service-hero-copy,.section-head,.faq-heading{min-width:0}.cover{image-rendering:auto;backface-visibility:hidden}
 
+/* The previous surgery photo was the narrowest source in the set. Re-use the sharper surgical/endoscopy asset already present in the project for this large block. */
+.organic-image.surgery{background:url('/images/pedro-endoscopy.webp') center 40%/cover no-repeat}
+.organic-image.surgery>img{opacity:0}
+
 @media(max-width:800px){
   .hero,.section,.story-section,.split-care,.faq-section,.service-page{width:100%;max-width:100%}
   .hero-copy,.story-copy,.split-copy,.exam-content,.service-hero-copy,.section-head,.faq-heading{width:100%;max-width:100%}
   .hero h1{font-size:clamp(43px,13vw,62px);line-height:.98;letter-spacing:-.055em}
   .section-head h2,.story-copy h2,.split-copy h2,.exam-content h2,.faq-heading h2{font-size:clamp(37px,10.8vw,54px);line-height:1}
-  .service-hero-copy h1{font-size:clamp(43px,12.4vw,62px);line-height:.98}
+  .service-hero-copy h1{font-size:clamp(40px,11.2vw,58px);line-height:1;white-space:normal;max-width:100%;overflow:visible;text-overflow:clip}
   .final-cta h2{font-size:clamp(41px,11.7vw,60px);line-height:.98}
   .hero-visual{width:100%;max-width:100%}
   .float-card{max-width:min(78vw,290px)}
   .float-card strong{display:block;line-height:1.25}
   .card-bottom{right:3%;width:auto}
-  .service-card h3{max-width:none}
+  .service-card{overflow:visible}
+  .service-card h3{max-width:100%;width:100%;white-space:normal;overflow:visible;text-overflow:clip;display:block;line-height:1.08;hyphens:none}
   .exam-links>a,.exam-static{grid-template-columns:34px minmax(0,1fr) 18px;gap:10px}
-  .exam-links strong,.exam-links small{overflow-wrap:anywhere}
+  .exam-links div{min-width:0}
+  .exam-links strong{display:block;white-space:normal;overflow:visible;text-overflow:clip;max-width:100%;line-height:1.25;overflow-wrap:normal;word-break:normal}
+  .exam-links small{display:block;white-space:normal;overflow:visible;text-overflow:clip;max-width:100%;line-height:1.35;overflow-wrap:normal;word-break:normal}
   .location-card h3{font-size:clamp(38px,11vw,54px)}
   .location-actions a{max-width:100%;overflow-wrap:anywhere}
   summary{grid-template-columns:30px minmax(0,1fr) 20px;gap:10px}
@@ -25,10 +32,13 @@ html,body{max-width:100%;overflow-x:hidden}main,section,article,div,header,foote
 
 @media(max-width:390px){
   .nav-shell{width:calc(100% - 12px);padding-right:8px;padding-left:8px}
-  .brand{gap:8px;min-width:0}.brand-symbol{flex:0 0 36px;width:36px;height:36px}.brand>span:last-child{min-width:0}.brand strong{font-size:13px;white-space:nowrap}.brand small{font-size:7.5px;letter-spacing:.11em;white-space:nowrap}
+  .brand{gap:8px;min-width:0}.brand-symbol{flex:0 0 36px;width:36px;height:36px}.brand>span:last-child{min-width:0}.brand strong{font-size:13px;white-space:nowrap}.brand small{font-size:7.5px;letter-spacing:.08em;white-space:normal;line-height:1.15;max-width:118px}
   .service-nav .nav-cta{padding:10px 11px;font-size:11px;border-radius:13px;white-space:nowrap}
   .hero{padding-left:14px;padding-right:14px}.section,.story-section,.split-care,.faq-section{padding-left:14px;padding-right:14px}
   .hero h1{font-size:clamp(40px,12.5vw,52px)}
+  .service-card h3{font-size:25px}
+  .exam-links strong{font-size:16px}
+  .exam-links small{font-size:11px}
   .credentials span{font-size:9px;padding:7px 8px}
   .float-card{padding:12px 13px}.float-card strong{font-size:11px}.float-card small{font-size:8px}
   .image-badge{right:5px;left:5px;width:auto;max-width:280px}
@@ -36,4 +46,4 @@ html,body{max-width:100%;overflow-x:hidden}main,section,article,div,header,foote
   .final-actions a{width:100%}
 }
 
-@media(max-width:340px){.brand small{display:none}.hero h1{font-size:39px}.service-hero-copy h1{font-size:40px}.final-cta h2{font-size:39px}}
+@media(max-width:340px){.brand small{display:none}.hero h1{font-size:39px}.service-hero-copy h1{font-size:37px}.final-cta h2{font-size:39px}.exam-links strong{font-size:15px}}
