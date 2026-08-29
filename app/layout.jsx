@@ -56,7 +56,15 @@ export const viewport = {
 export default function RootLayout({ children }) {
   return (
     <html lang="pt-BR">
-      <body>{children}</body>
+      <body>
+        {children}
+        <div className="made-by-wrap">
+          <a className="made-by-badge" href="https://www.nova-web.it/" target="_blank" rel="noopener noreferrer" aria-label="Site desenvolvido pela NovaWeb" title="NovaWeb">
+            <span>Made by</span>
+            <span className="made-by-logo"><img src="https://www.nova-web.it/Logo-scritta-vet.png" alt="NovaWeb" width="72" height="20" loading="lazy" decoding="async" /></span>
+          </a>
+        </div>
+      </body>
     </html>
   );
 }
