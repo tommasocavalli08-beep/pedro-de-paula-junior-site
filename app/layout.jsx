@@ -1,4 +1,5 @@
 import './globals.css';
+import './mobile-fixes.css';
 
 const siteUrl = 'https://pedro-de-paula-junior.vercel.app';
 
@@ -35,7 +36,7 @@ export const metadata = {
     siteName: 'Dr. Pedro de Paula Junior',
     locale: 'pt_BR',
     type: 'website',
-    images: [{ url: '/images/pedro-portrait.webp', width: 546, height: 820, alt: 'Dr. Pedro de Paula Junior' }]
+    images: [{ url: '/images/pedro-portrait.webp', width: 1023, height: 1537, alt: 'Dr. Pedro de Paula Junior' }]
   },
   twitter: {
     card: 'summary_large_image',
