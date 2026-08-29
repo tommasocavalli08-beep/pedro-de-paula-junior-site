@@ -5,7 +5,7 @@ export const servicePages = {
     title: 'Cirurgia Geral e Digestiva',
     kicker: 'Cirurgia',
     intro: 'Avaliação e tratamento cirúrgico de doenças do aparelho digestivo e da parede abdominal, com técnicas minimamente invasivas quando indicadas.',
-    image: '/images/pedro-surgery.webp',
+    image: '/images/pedro-endoscopy.webp',
     imageAlt: 'Dr. Pedro de Paula Junior em ambiente cirúrgico',
     body: [
       'A consulta cirúrgica começa pela compreensão dos sintomas, do histórico do paciente e dos exames já realizados. A indicação de cirurgia só acontece quando o benefício esperado supera os riscos e quando existe uma alternativa adequada para o caso.',
