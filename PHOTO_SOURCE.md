@@ -1,0 +1,1 @@
+Production images use the original Dr. Pedro photos supplied by the client. Consultation: doctor with patient in office. Surgery: doctor operating in blue surgical gown. Endoscopy/exams: doctor in procedure room with monitor. No stock or generated doctor photos.
