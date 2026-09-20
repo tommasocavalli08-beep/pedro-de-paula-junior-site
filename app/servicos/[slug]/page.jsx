@@ -1,42 +1,94 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { servicePages, SITE_URL } from '../../data';
+import { locations, services, SITE_URL, doctor } from '@/app/data';
+import { Arrow, JsonLd, PublicShell } from '@/app/ui';
 
-export function generateStaticParams() { return Object.keys(servicePages).map((slug) => ({ slug })); }
+export function generateStaticParams() {
+  return Object.keys(services).map((slug) => ({ slug }));
+}
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;
-  const item = servicePages[slug];
-  if (!item) return {};
+  const service = services[slug];
+  if (!service) return {};
+  const url = `${SITE_URL}/servicos/${slug}`;
   return {
-    title: item.title,
-    description: item.intro,
-    alternates: { canonical: `/servicos/${slug}` },
-    openGraph: { title: `${item.title} | Dr. Pedro de Paula Junior`, description: item.intro, url: `${SITE_URL}/servicos/${slug}`, images: [item.image] }
+    title: service.title,
+    description: service.summary,
+    alternates: { canonical: url },
+    openGraph: { title: `${service.title} | ${doctor.name}`, description: service.summary, url, images: [{ url: service.image }] },
   };
 }
 
 export default async function ServicePage({ params }) {
   const { slug } = await params;
-  const item = servicePages[slug];
-  if (!item) notFound();
+  const service = services[slug];
+  if (!service) notFound();
+
   const schema = {
-    '@context': 'https://schema.org', '@type': 'MedicalProcedure', name: item.title, description: item.intro,
-    url: `${SITE_URL}/servicos/${slug}`, image: `${SITE_URL}${item.image}`,
-    provider: { '@type': 'Physician', name: 'Dr. Pedro de Paula Junior', identifier: 'CRM-SP 112723 · CRM-MG 47662' }
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'MedicalWebPage',
+        '@id': `${SITE_URL}/servicos/${slug}#page`,
+        url: `${SITE_URL}/servicos/${slug}`,
+        name: service.title,
+        description: service.summary,
+        inLanguage: 'pt-BR',
+        about: { '@type': 'MedicalProcedure', name: service.title },
+        reviewedBy: { '@type': 'Physician', name: doctor.name, url: SITE_URL },
+      },
+      {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Início', item: SITE_URL },
+          { '@type': 'ListItem', position: 2, name: service.title, item: `${SITE_URL}/servicos/${slug}` },
+        ],
+      },
+      ...(service.faq?.length ? [{
+        '@type': 'FAQPage',
+        mainEntity: service.faq.map(([q, a]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } })),
+      }] : []),
+    ],
   };
-  return <>
-    <header className="nav-shell service-nav"><Link className="brand" href="/"><span className="brand-symbol">P</span><span><strong>Dr. Pedro</strong><small>Cirurgia Digestiva</small></span></Link><Link className="nav-cta" href="/#locais">Agendar <span>↗</span></Link></header>
-    <main className="service-page">
-      <section className="service-hero">
-        <div className="service-hero-copy"><p className="eyebrow"><span className="eyebrow-dot"/> {item.kicker}</p><h1>{item.title}</h1><p>{item.intro}</p><Link className="button primary" href="/#locais">Falar com a recepção <span>↗</span></Link></div>
-        <div className="service-hero-image"><Image src={item.image} alt={item.imageAlt} fill priority sizes="(max-width: 800px) 94vw, 46vw" className="cover"/></div>
-      </section>
-      <section className="service-body"><div className="service-text">{item.body.map((p)=><p key={p}>{p}</p>)}</div><aside><span>Atuação</span><ul>{item.points.map(p=><li key={p}>{p}</li>)}</ul></aside></section>
-      <section className="service-back"><Link href="/">← Voltar ao site</Link><Link href="/#locais">Agendar avaliação <span>↗</span></Link></section>
-    </main>
-    <footer className="service-footer"><p>Dr. Pedro de Paula Junior · CRM-SP 112723 · CRM-MG 47662 · RQE 28023 / 28024</p><p>Informação educativa. A indicação depende de avaliação médica individual.</p></footer>
-    <script type="application/ld+json" dangerouslySetInnerHTML={{__html: JSON.stringify(schema)}}/>
-  </>;
+
+  return (
+    <PublicShell>
+      <main id="conteudo" className="service-page">
+        <section className="service-hero section-pad">
+          <div className="service-hero-copy" data-reveal>
+            <p className="eyebrow"><span /> {service.eyebrow}</p>
+            <h1>{service.title}</h1>
+            <p>{service.summary}</p>
+            <div className="hero-actions"><a className="btn btn-dark" href={locations.santaFe.whatsapp} target="_blank" rel="noreferrer">Agendar avaliação <Arrow /></a><Link className="btn btn-ghost" href="/#atuacao">Ver outras áreas</Link></div>
+          </div>
+          <div className="service-hero-image" data-reveal><Image src={service.image} alt={service.imageAlt} fill priority sizes="(max-width: 860px) 92vw, 44vw" className="cover"/></div>
+        </section>
+
+        <section className="service-content section-pad">
+          <div className="service-body" data-reveal>
+            <p className="service-intro">{service.intro}</p>
+            {service.body.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
+            <p className="medical-note">As informações acima são educativas e não substituem avaliação médica individual. Indicação de exames e tratamentos depende da consulta e do diagnóstico.</p>
+          </div>
+          <aside className="service-aside" data-reveal>
+            <span>Relacionados a esta área</span>
+            <ul>{service.points.map((point) => <li key={point}>{point}</li>)}</ul>
+          </aside>
+        </section>
+
+        {service.faq?.length > 0 && <section className="service-faq section-pad">
+          <div><p className="eyebrow"><span /> Perguntas frequentes</p><h2>Dúvidas sobre <em>{service.short.toLowerCase()}.</em></h2></div>
+          <div className="faq-list">{service.faq.map(([q, a], i) => <details key={q}><summary><span>0{i+1}</span><strong>{q}</strong><i>+</i></summary><p>{a}</p></details>)}</div>
+        </section>}
+
+        <section className="service-local section-pad" data-reveal>
+          <div><span>Consultas</span><h3>Santa Fé do Sul</h3><p>{locations.santaFe.address}</p><Link href="/santa-fe-do-sul">Informações da unidade <Arrow /></Link></div>
+          <div><span>Exames</span><h3>Iturama</h3><p>{locations.iturama.facility}<br/>{locations.iturama.address}</p><Link href="/iturama">Informações da unidade <Arrow /></Link></div>
+        </section>
+      </main>
+      <JsonLd data={schema} />
+    </PublicShell>
+  );
 }

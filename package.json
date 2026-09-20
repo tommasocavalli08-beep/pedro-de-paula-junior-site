@@ -1,6 +1,6 @@
 {
   "name": "pedro-de-paula-junior-site",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -8,6 +8,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "@vercel/blob": "2.6.1",
     "next": "16.2.3",
     "react": "19.1.1",
     "react-dom": "19.1.1"

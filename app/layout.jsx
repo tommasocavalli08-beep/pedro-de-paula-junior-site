@@ -1,56 +1,65 @@
 import './globals.css';
-import './mobile-fixes.css';
-
-const siteUrl = 'https://pedro-de-paula-junior.vercel.app';
+import Motion from './motion';
+import { SITE_URL, doctor } from './data';
 
 export const metadata = {
-  metadataBase: new URL(siteUrl),
+  metadataBase: new URL(SITE_URL),
   title: {
-    default: 'Dr. Pedro de Paula Junior | Cirurgia Digestiva',
-    template: '%s | Dr. Pedro de Paula Junior'
+    default: 'Dr. Pedro de Paula Junior | Cirurgia Digestiva, Endoscopia e Colonoscopia',
+    template: '%s | Dr. Pedro de Paula Junior',
   },
-  description: 'Cirurgião geral e do aparelho digestivo em Santa Fé do Sul e Iturama. Endoscopia, colonoscopia e cirurgia videolaparoscópica.',
+  description: 'Cirurgião geral e do aparelho digestivo em Santa Fé do Sul (SP), com endoscopia, colonoscopia e exames em Iturama (MG). CRM-SP 112723 · CRM-MG 47662 · RQE 28023/28024.',
   keywords: [
+    'Dr Pedro de Paula Junior',
     'cirurgião geral Santa Fé do Sul',
-    'cirurgião do aparelho digestivo Santa Fé do Sul',
-    'endoscopia Santa Fé do Sul',
-    'colonoscopia Santa Fé do Sul',
+    'cirurgião aparelho digestivo Santa Fé do Sul',
+    'cirurgia digestiva Santa Fé do Sul',
     'endoscopia Iturama',
     'colonoscopia Iturama',
-    'cirurgia digestiva Iturama',
-    'Dr Pedro de Paula Junior'
+    'endoscopia Santa Fé do Sul',
+    'colonoscopia Santa Fé do Sul',
+    'cirurgia de hérnia Santa Fé do Sul',
+    'cirurgia de vesícula Santa Fé do Sul',
+    'SIBO Santa Fé do Sul',
+    'teste de hidrogênio expirado',
   ],
-  authors: [{ name: 'Dr. Pedro de Paula Junior' }],
-  creator: 'Dr. Pedro de Paula Junior',
+  authors: [{ name: doctor.name }],
+  creator: doctor.name,
   category: 'Saúde',
   alternates: { canonical: '/' },
   robots: {
     index: true,
     follow: true,
-    googleBot: { index: true, follow: true, 'max-image-preview': 'large', 'max-snippet': -1, 'max-video-preview': -1 }
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+      'max-video-preview': -1,
+    },
   },
   openGraph: {
-    title: 'Dr. Pedro de Paula Junior | Cirurgia Digestiva',
-    description: 'Cirurgia geral e digestiva, endoscopia e colonoscopia em Santa Fé do Sul (SP) e Iturama (MG).',
-    url: siteUrl,
-    siteName: 'Dr. Pedro de Paula Junior',
-    locale: 'pt_BR',
     type: 'website',
-    images: [{ url: '/images/pedro-portrait.webp', width: 1023, height: 1537, alt: 'Dr. Pedro de Paula Junior' }]
+    locale: 'pt_BR',
+    url: SITE_URL,
+    siteName: doctor.name,
+    title: 'Dr. Pedro de Paula Junior | Cirurgia Digestiva',
+    description: 'Cirurgia geral e do aparelho digestivo, endoscopia e colonoscopia em Santa Fé do Sul (SP) e Iturama (MG).',
+    images: [{ url: '/opengraph-image', width: 1200, height: 630, alt: doctor.name }],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Dr. Pedro de Paula Junior | Cirurgia Digestiva',
-    description: 'Cirurgia geral e digestiva, endoscopia e colonoscopia em Santa Fé do Sul e Iturama.',
-    images: ['/images/pedro-portrait.webp']
+    description: 'Cirurgia geral e digestiva, endoscopia e colonoscopia.',
+    images: ['/opengraph-image'],
   },
-  icons: { icon: '/favicon.svg' }
+  icons: { icon: '/favicon.svg' },
 };
 
 export const viewport = {
   width: 'device-width',
   initialScale: 1,
-  themeColor: '#f6f1e7'
+  themeColor: '#f3f0e9',
 };
 
 export default function RootLayout({ children }) {
@@ -58,12 +67,7 @@ export default function RootLayout({ children }) {
     <html lang="pt-BR">
       <body>
         {children}
-        <div className="made-by-wrap">
-          <a className="made-by-badge" href="https://www.nova-web.it/" target="_blank" rel="noopener noreferrer" aria-label="Site desenvolvido pela NovaWeb" title="NovaWeb">
-            <span>Made by</span>
-            <span className="made-by-logo"><img src="https://www.nova-web.it/Logo-scritta-vet.png" alt="NovaWeb" width="72" height="20" loading="lazy" decoding="async" /></span>
-          </a>
-        </div>
+        <Motion />
       </body>
     </html>
   );

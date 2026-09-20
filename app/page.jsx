@@ -1,53 +1,227 @@
-'use client';
-
 import Image from 'next/image';
 import Link from 'next/link';
-import { useEffect, useRef } from 'react';
-import { SITE_URL } from './data';
+import { featuredServiceSlugs, homeFaq, locations, services, SITE_URL, doctor } from './data';
+import { getEditorialContent } from '@/lib/editorial';
+import { Arrow, JsonLd, PublicShell } from './ui';
 
-const whatsappSantaFe = 'https://wa.me/551736315442?text=Ol%C3%A1%2C%20gostaria%20de%20agendar%20uma%20avalia%C3%A7%C3%A3o%20com%20o%20Dr.%20Pedro.';
-const whatsappIturama = 'https://wa.me/553434119900?text=Ol%C3%A1%2C%20gostaria%20de%20informa%C3%A7%C3%B5es%20sobre%20exames%20com%20o%20Dr.%20Pedro.';
+const physicianSchema = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'WebSite',
+      '@id': `${SITE_URL}/#website`,
+      url: SITE_URL,
+      name: `${doctor.name} | Cirurgia Digestiva`,
+      inLanguage: 'pt-BR',
+      publisher: { '@id': `${SITE_URL}/#physician` },
+    },
+    {
+      '@type': ['Physician', 'Person'],
+      '@id': `${SITE_URL}/#physician`,
+      name: doctor.name,
+      url: SITE_URL,
+      image: `${SITE_URL}/images/pedro-portrait.webp`,
+      email: doctor.email,
+      jobTitle: 'Cirurgião Geral e do Aparelho Digestivo',
+      description: 'Cirurgião geral e do aparelho digestivo com atuação em cirurgia videolaparoscópica, endoscopia e colonoscopia.',
+      medicalSpecialty: ['https://schema.org/Surgical', 'https://schema.org/Gastroenterologic'],
+      areaServed: [
+        { '@type': 'City', name: 'Santa Fé do Sul', containedInPlace: { '@type': 'State', name: 'São Paulo' } },
+        { '@type': 'City', name: 'Iturama', containedInPlace: { '@type': 'State', name: 'Minas Gerais' } },
+      ],
+      alumniOf: { '@type': 'CollegeOrUniversity', name: 'FAMERP — Faculdade de Medicina de São José do Rio Preto' },
+      knowsAbout: [
+        'Cirurgia do aparelho digestivo', 'Cirurgia videolaparoscópica', 'Endoscopia digestiva alta', 'Colonoscopia',
+        'Hérnias da parede abdominal', 'Doenças da vesícula biliar', 'SIBO', 'Doenças anorretais'
+      ],
+    },
+    {
+      '@type': 'MedicalClinic',
+      '@id': `${SITE_URL}/#santa-fe`,
+      name: `${doctor.name} — Consultório em Santa Fé do Sul`,
+      url: `${SITE_URL}/santa-fe-do-sul`,
+      telephone: locations.santaFe.phoneE164,
+      email: doctor.email,
+      address: {
+        '@type': 'PostalAddress',
+        streetAddress: locations.santaFe.streetAddress,
+        addressLocality: locations.santaFe.locality,
+        addressRegion: locations.santaFe.region,
+        postalCode: locations.santaFe.postalCode,
+        addressCountry: 'BR',
+      },
+      availableService: featuredServiceSlugs.map((slug) => ({ '@type': 'MedicalProcedure', name: services[slug].title })),
+      employee: { '@id': `${SITE_URL}/#physician` },
+    },
+    {
+      '@type': 'MedicalOrganization',
+      '@id': `${SITE_URL}/#iturama`,
+      name: `${doctor.name} — Exames em Iturama`,
+      url: `${SITE_URL}/iturama`,
+      telephone: locations.iturama.phoneE164,
+      address: {
+        '@type': 'PostalAddress',
+        streetAddress: locations.iturama.streetAddress,
+        addressLocality: locations.iturama.locality,
+        addressRegion: locations.iturama.region,
+        postalCode: locations.iturama.postalCode,
+        addressCountry: 'BR',
+      },
+      member: { '@id': `${SITE_URL}/#physician` },
+    },
+    {
+      '@type': 'FAQPage',
+      '@id': `${SITE_URL}/#faq`,
+      mainEntity: homeFaq.map(([q, a]) => ({
+        '@type': 'Question',
+        name: q,
+        acceptedAnswer: { '@type': 'Answer', text: a },
+      })),
+    },
+  ],
+};
 
-const faqs = [
-  ['Quais problemas são avaliados pelo cirurgião digestivo?', 'O Dr. Pedro avalia doenças do aparelho digestivo e condições com possível indicação cirúrgica, incluindo hérnias, doenças da vesícula, refluxo, gastrites, úlceras, alterações intestinais e doenças anorretais. A conduta é definida após avaliação individual.'],
-  ['Onde o Dr. Pedro atende?', 'As consultas são realizadas em Santa Fé do Sul (SP), na Clínica Due Vascolare, Rua Cinco, 1198, Centro. Em Iturama (MG), os exames são realizados no Hospital Nossa Senhora Aparecida, Rua Ituiutaba, 712, Centro.'],
-  ['O Dr. Pedro realiza cirurgia videolaparoscópica?', 'Sim. A cirurgia videolaparoscópica integra sua área de atuação. A indicação depende do diagnóstico, das condições clínicas e da avaliação médica de cada paciente.'],
-  ['Quais exames digestivos são realizados?', 'Entre os exames informados estão endoscopia digestiva alta, colonoscopia e teste de hidrogênio expirado para investigação de intolerâncias alimentares, intolerância à lactose e SIBO.'],
-  ['Como agendar uma consulta ou exame?', 'Escolha Santa Fé do Sul ou Iturama na seção de locais e fale diretamente com a recepção pelo WhatsApp ou telefone. A equipe orientará sobre disponibilidade e preparo, quando necessário.']
-];
+export const dynamic = 'force-dynamic';
 
-function Arrow() { return <span aria-hidden="true">↗</span>; }
+export default async function Home() {
+  const editorial = await getEditorialContent({ fresh: true });
+  return (
+    <PublicShell>
+      <main id="conteudo">
+        <section className="hero-home section-pad" id="inicio">
+          <div className="hero-backdrop hero-backdrop-a" />
+          <div className="hero-backdrop hero-backdrop-b" />
+          <div className="hero-home-copy" data-reveal>
+            <p className="eyebrow"><span /> Cirurgia digestiva · Endoscopia · Colonoscopia</p>
+            <h1>Cuidado preciso para a sua <em>saúde digestiva.</em></h1>
+            <p className="hero-lead">Avaliação clínica e cirúrgica com explicações claras, investigação criteriosa e acompanhamento próximo em Santa Fé do Sul e Iturama.</p>
+            <div className="hero-actions">
+              <a className="btn btn-dark" href={locations.santaFe.whatsapp} target="_blank" rel="noreferrer">Agendar consulta <Arrow /></a>
+              <a className="btn btn-ghost" href="#atuacao">Conhecer atuação</a>
+            </div>
+            <div className="credential-row" aria-label="Registros profissionais">
+              <span>{doctor.crmSP}</span><span>{doctor.crmMG}</span><span>{doctor.rqe}</span>
+            </div>
+          </div>
+          <div className="hero-home-visual" data-reveal>
+            <div className="hero-photo-frame">
+              <Image src="/images/pedro-portrait.webp" alt="Dr. Pedro de Paula Junior" fill priority sizes="(max-width: 860px) 92vw, 43vw" className="cover" />
+            </div>
+            <div className="hero-card hero-card-top"><span>Formação médica</span><strong>FAMERP · 2003</strong></div>
+            <div className="hero-card hero-card-bottom"><span className="status-dot"/><strong>Santa Fé do Sul · Iturama</strong></div>
+          </div>
+        </section>
 
-export default function Home() {
-  const heroRef = useRef(null);
-  useEffect(() => {
-    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (reduce) return;
-    const revealObserver = new IntersectionObserver((entries) => entries.forEach((entry) => { if (entry.isIntersecting) { entry.target.classList.add('is-visible'); revealObserver.unobserve(entry.target); } }), { threshold: 0.12, rootMargin: '0px 0px -4% 0px' });
-    document.querySelectorAll('[data-reveal]').forEach((el) => revealObserver.observe(el));
-    const onScroll = () => { const y = window.scrollY; document.documentElement.style.setProperty('--scroll-y', `${y}px`); document.querySelectorAll('[data-parallax]').forEach((el) => { const rect = el.getBoundingClientRect(); const center = rect.top + rect.height / 2 - window.innerHeight / 2; const speed = Number(el.dataset.parallax || 0.06); el.style.setProperty('--parallax-y', `${center * speed}px`); }); };
-    onScroll(); window.addEventListener('scroll', onScroll, { passive: true });
-    const hero = heroRef.current; const onMove = (e) => { if (!hero) return; const rect = hero.getBoundingClientRect(); hero.style.setProperty('--mx', `${e.clientX - rect.left}px`); hero.style.setProperty('--my', `${e.clientY - rect.top}px`); };
-    hero?.addEventListener('pointermove', onMove);
-    return () => { revealObserver.disconnect(); window.removeEventListener('scroll', onScroll); hero?.removeEventListener('pointermove', onMove); };
-  }, []);
+        <div className="trust-strip" aria-label="Principais áreas">
+          <div><span>Cirurgia videolaparoscópica</span><i>✦</i><span>Endoscopia digestiva</span><i>✦</i><span>Colonoscopia</span><i>✦</i><span>Saúde intestinal</span><i>✦</i><span>Cirurgia de hérnias</span></div>
+        </div>
 
-  const structuredData = {'@context':'https://schema.org','@graph':[{'@type':'WebSite','@id':`${SITE_URL}/#website`,url:SITE_URL,name:'Dr. Pedro de Paula Junior | Cirurgia Digestiva',inLanguage:'pt-BR'},{'@type':['Physician','Person'],'@id':`${SITE_URL}/#dr-pedro`,name:'Dr. Pedro de Paula Junior',jobTitle:'Cirurgião Geral e do Aparelho Digestivo',image:`${SITE_URL}/images/pedro-portrait.webp`} ]};
+        <section className="section-pad section-light" id="atuacao">
+          <div className="section-heading" data-reveal>
+            <p className="eyebrow"><span /> Áreas de atuação</p>
+            <div className="heading-split"><h2>Um cuidado completo, do sintoma à <em>decisão.</em></h2><p>Consulta, exames e cirurgia organizados em uma linha de cuidado coerente. Cada conduta depende do diagnóstico e do contexto clínico individual.</p></div>
+          </div>
+          <div className="services-grid">
+            {featuredServiceSlugs.map((slug, index) => {
+              const service = services[slug];
+              return (
+                <Link href={`/servicos/${slug}`} className={`service-card service-tone-${(index % 3) + 1}`} data-reveal key={slug}>
+                  <span className="service-index">0{index + 1}</span>
+                  <div><p>{service.eyebrow}</p><h3>{service.short}</h3><span className="service-arrow"><Arrow /></span></div>
+                  <p>{service.summary}</p>
+                </Link>
+              );
+            })}
+          </div>
+          <div className="services-more" data-reveal><Link href="/servicos/cirurgia-de-vesicula">Cirurgia de vesícula</Link><Link href="/servicos/refluxo-gastrite-ulceras">Refluxo, gastrites e úlceras</Link><Link href="/servicos/teste-hidrogenio-expirado">Teste de hidrogênio expirado</Link></div>
+        </section>
 
-  return <>
-    <a className="skip-link" href="#conteudo">Ir para o conteúdo</a>
-    <header className="nav-shell"><a className="brand" href="#inicio" aria-label="Dr. Pedro — início"><span className="brand-symbol">P</span><span><strong>Dr. Pedro</strong><small>Cirurgia Digestiva</small></span></a><nav aria-label="Navegação principal"><a href="#atuacao">Atuação</a><a href="#sobre">Sobre</a><a href="#exames">Exames</a><a href="#locais">Onde atende</a></nav><a className="nav-cta" href="#locais">Agendar <Arrow /></a></header>
-    <main id="conteudo">
-      <section className="hero" id="inicio" ref={heroRef}><div className="hero-orb orb-one"/><div className="hero-orb orb-two"/><div className="hero-copy" data-reveal><p className="eyebrow"><span className="eyebrow-dot"/> Santa Fé do Sul · Iturama</p><h1><span>Precisão para</span> <em>investigar.</em><br/><span>Experiência para</span> <em>tratar.</em></h1><p className="hero-lead">Cirurgia geral e do aparelho digestivo, endoscopia e colonoscopia com escuta atenta, explicações claras e cuidado em cada etapa.</p><div className="hero-actions"><a className="button primary" href="#locais">Agendar avaliação <Arrow /></a><a className="button soft" href="#atuacao">Conhecer a atuação</a></div><div className="credentials"><span>CRM-SP 112723</span><span>CRM-MG 47662</span><span>RQE 28023 · 28024</span></div></div><div className="hero-visual" data-reveal data-parallax="0.035"><div className="portrait-wrap"><Image src="/images/pedro-portrait.webp" alt="Dr. Pedro de Paula Junior" fill priority sizes="(max-width: 760px) 92vw, 42vw" className="cover"/><div className="portrait-wash"/></div><div className="float-card card-top"><small>Formação</small><strong>FAMERP · 2003</strong></div><div className="float-card card-bottom"><span className="pulse-dot"/><strong>Cirurgia · Endoscopia · Colonoscopia</strong></div></div></section>
-      <div className="marquee"><div className="marquee-track">{[0,1].map(loop=><div className="marquee-set" key={loop}><span>Cirurgia videolaparoscópica</span><i>✦</i><span>Endoscopia digestiva</span><i>✦</i><span>Colonoscopia</span><i>✦</i><span>Saúde gastrointestinal</span><i>✦</i></div>)}</div></div>
-      <section className="section intro-section" id="atuacao"><div className="section-head" data-reveal><p className="eyebrow"><span className="eyebrow-dot"/> Áreas de atuação</p><h2>Do diagnóstico ao tratamento, <em>sem atalhos.</em></h2><p>Uma abordagem integrada para problemas cirúrgicos e doenças gastrointestinais, com indicação individual e comunicação clara.</p></div><div className="service-grid">{[['01','Cirurgia geral e digestiva','Hérnias, vesícula, estômago e intestino, com videolaparoscopia quando indicada.','/servicos/cirurgia-digestiva','sage'],['02','Endoscopia digestiva alta','Investigação do esôfago, estômago e duodeno, além de procedimentos terapêuticos.','/servicos/endoscopia-digestiva','ivory'],['03','Colonoscopia','Avaliação do cólon, prevenção, diagnóstico e remoção de pólipos quando indicada.','/servicos/colonoscopia','clay'],['04','Saúde gastrointestinal','Refluxo, gastrites, úlceras, alterações intestinais, disbiose e SIBO.','/servicos/saude-gastrointestinal','mist']].map(([n,title,text,href,tone],i)=><Link href={href} className={`service-card ${tone}`} data-reveal key={title} style={{'--delay':`${i*80}ms`}}><span className="service-num">{n}</span><h3>{title}</h3><p>{text}</p><span className="card-link">Conhecer <Arrow /></span></Link>)}</div></section>
-      <section className="story-section" id="sobre"><div className="story-image" data-reveal data-parallax="0.045"><div className="organic-image landscape"><Image src="/images/pedro-consultation.webp?v=original-client-photo-20260830" unoptimized alt="Dr. Pedro de Paula Junior durante atendimento em consultório" fill sizes="(max-width: 800px) 92vw, 50vw" className="cover"/></div><span className="image-caption">Cuidado próximo · decisão compartilhada</span></div><div className="story-copy" data-reveal><p className="eyebrow light"><span className="eyebrow-dot"/> Sobre o médico</p><h2>Técnica sólida.<br/><em>Presença humana.</em></h2><p className="story-lead">“Cuidar de alguém vai muito além da técnica: é estar presente, ouvir com atenção e explicar cada etapa com clareza.”</p><p>O Dr. Pedro de Paula Junior é cirurgião geral e do aparelho digestivo. Formado pela Famerp em 2003, completou residência em Cirurgia Geral, residência em Cirurgia do Aparelho Digestivo e período dedicado à endoscopia e colonoscopia.</p><div className="mini-stats"><div><strong>2003</strong><span>Graduação FAMERP</span></div><div><strong>5 anos</strong><span>Residências + endoscopia</span></div></div></div></section>
-      <section className="section split-care" id="procedimentos"><div className="split-copy" data-reveal><p className="eyebrow"><span className="eyebrow-dot"/> Cirurgia e tratamento</p><h2>Experiência quando a decisão precisa ser <em>precisa.</em></h2><p>A indicação cirúrgica é construída a partir do diagnóstico e do perfil de cada paciente. Quando a cirurgia é necessária, a técnica é escolhida de forma individual.</p><ul className="check-list"><li>Hérnias da parede abdominal</li><li>Cirurgia de vesícula</li><li>Cirurgias do estômago e intestino</li><li>Doenças anorretais</li><li>Pequenas cirurgias</li></ul><Link className="text-link" href="/servicos/cirurgia-digestiva">Ver cirurgia digestiva <Arrow /></Link></div><div className="split-image" data-reveal data-parallax="0.055"><div className="organic-image surgery"><Image src="/images/pedro-surgery.webp?v=original-client-photo-20260830" unoptimized alt="Dr. Pedro de Paula Junior em ambiente cirúrgico" fill sizes="(max-width: 800px) 92vw, 44vw" className="cover"/></div><div className="image-badge"><span>01</span><p>Cirurgia<br/><strong>videolaparoscópica</strong></p></div></div></section>
-      <section className="exam-section" id="exames"><div className="exam-photo" data-reveal data-parallax="0.04"><Image src="/images/pedro-endoscopy.webp?v=original-client-photo-20260830" unoptimized alt="Dr. Pedro de Paula Junior durante procedimento endoscópico" fill sizes="(max-width: 900px) 100vw, 46vw" className="cover"/></div><div className="exam-copy" data-reveal><p className="eyebrow light"><span className="eyebrow-dot"/> Exames digestivos</p><h2>Investigar bem é o primeiro passo para <em>tratar melhor.</em></h2><p>Endoscopia digestiva alta e colonoscopia para prevenção, diagnóstico e acompanhamento, com orientação clara sobre preparo e resultados.</p><div className="exam-links"><Link href="/servicos/endoscopia-digestiva">Endoscopia digestiva alta <Arrow /></Link><Link href="/servicos/colonoscopia">Colonoscopia <Arrow /></Link></div></div></section>
-      <section className="section locations" id="locais"><div className="section-head" data-reveal><p className="eyebrow"><span className="eyebrow-dot"/> Onde atende</p><h2>Escolha a unidade mais <em>próxima.</em></h2></div><div className="location-grid"><article className="location-card" data-reveal><span className="location-city">SP</span><h3>Santa Fé do Sul</h3><p>Clínica Due Vascolare<br/>Rua Cinco, 1198 · Centro</p><a className="button primary" href={whatsappSantaFe}>Agendar em Santa Fé <Arrow /></a></article><article className="location-card" data-reveal><span className="location-city">MG</span><h3>Iturama</h3><p>Hospital Nossa Senhora Aparecida<br/>Rua Ituiutaba, 712 · Centro</p><a className="button primary" href={whatsappIturama}>Agendar em Iturama <Arrow /></a></article></div></section>
-      <section className="section faq"><div className="section-head"><p className="eyebrow"><span className="eyebrow-dot"/> Dúvidas frequentes</p><h2>Informação clara antes da <em>consulta.</em></h2></div><div className="faq-list">{faqs.map(([q,a])=><details key={q}><summary>{q}</summary><p>{a}</p></details>)}</div></section>
-    </main>
-    <footer><div className="footer-brand"><span className="brand-symbol">P</span><div><strong>Dr. Pedro de Paula Junior</strong><small>Cirurgia Geral e do Aparelho Digestivo</small></div></div><p>CRM-SP 112723 · CRM-MG 47662 · RQE 28023 / 28024</p><a className="novaweb-badge" href="https://novawebstudio.com.br" target="_blank" rel="noreferrer">Made by <strong>NovaWeb</strong></a></footer>
-    <script type="application/ld+json" dangerouslySetInnerHTML={{__html:JSON.stringify(structuredData)}}/>
-  </>;
+        <section className="about-section section-pad" id="sobre">
+          <div className="about-photo" data-reveal>
+            <div className="about-photo-inner"><Image src="/images/pedro-consultation.webp" alt="Dr. Pedro de Paula Junior durante atendimento" fill sizes="(max-width: 860px) 92vw, 46vw" className="cover" /></div>
+            <p>Escuta, clareza e decisão compartilhada.</p>
+          </div>
+          <div className="about-copy" data-reveal>
+            <p className="eyebrow eyebrow-light"><span /> Sobre o médico</p>
+            <h2>Técnica sólida.<br/><em>Presença humana.</em></h2>
+            <p className="about-quote">“Cuidar vai além da técnica: é ouvir, explicar e acompanhar cada etapa com clareza.”</p>
+            <p>O Dr. Pedro de Paula Junior é cirurgião geral e do aparelho digestivo, com atuação em cirurgia videolaparoscópica, endoscopia e colonoscopia. Formou-se pela FAMERP em 2003 e realizou residências em Cirurgia Geral e Cirurgia do Aparelho Digestivo, além de período dedicado à endoscopia e colonoscopia.</p>
+            <div className="formation-grid">
+              <div><strong>2003</strong><span>Graduação · FAMERP</span></div>
+              <div><strong>2 + 2 anos</strong><span>Residências cirúrgicas</span></div>
+              <div><strong>1 ano</strong><span>Endoscopia e colonoscopia</span></div>
+            </div>
+          </div>
+        </section>
+
+        <section className="section-pad procedure-section" id="cirurgia">
+          <div className="procedure-copy" data-reveal>
+            <p className="eyebrow"><span /> Cirurgia</p>
+            <h2>Quando operar, <em>como operar</em> e por quê.</h2>
+            <p>A indicação começa por uma avaliação bem feita. O objetivo é compreender a doença, revisar alternativas e definir a técnica adequada ao caso — incluindo videolaparoscopia quando indicada.</p>
+            <div className="chips"><span>Hérnias</span><span>Vesícula</span><span>Estômago e intestino</span><span>Doenças anorretais</span><span>Cisto pilonidal</span></div>
+            <Link className="text-link" href="/servicos/cirurgia-digestiva">Entender a cirurgia digestiva <Arrow /></Link>
+          </div>
+          <div className="procedure-photo" data-reveal>
+            <Image src="/images/pedro-surgery.webp" alt="Dr. Pedro de Paula Junior durante procedimento cirúrgico" fill sizes="(max-width: 860px) 92vw, 45vw" className="cover" />
+            <div className="photo-label"><span>Cirurgia</span><strong>Planejamento individual</strong></div>
+          </div>
+        </section>
+
+        <section className="exams-section" id="exames">
+          <div className="exams-photo" data-reveal><Image src="/images/pedro-endoscopy.webp" alt="Dr. Pedro de Paula Junior em sala de endoscopia" fill sizes="(max-width: 860px) 100vw, 48vw" className="cover" /></div>
+          <div className="exams-copy section-pad" data-reveal>
+            <p className="eyebrow eyebrow-light"><span /> Exames digestivos</p>
+            <h2>Investigar bem para <em>decidir melhor.</em></h2>
+            <p>Endoscopia digestiva alta, colonoscopia e teste de hidrogênio expirado integram a investigação de diferentes sintomas e condições gastrointestinais.</p>
+            <div className="exams-list">
+              <Link href="/servicos/endoscopia-digestiva"><span>01</span><strong>Endoscopia digestiva alta</strong><Arrow /></Link>
+              <Link href="/servicos/colonoscopia"><span>02</span><strong>Colonoscopia</strong><Arrow /></Link>
+              <Link href="/servicos/teste-hidrogenio-expirado"><span>03</span><strong>Teste de hidrogênio expirado</strong><Arrow /></Link>
+            </div>
+          </div>
+        </section>
+
+        <section className="section-pad locations-section" id="locais">
+          <div className="section-heading" data-reveal><p className="eyebrow"><span /> Onde atende</p><div className="heading-split"><h2>Duas cidades, uma linha de <em>cuidado.</em></h2><p>Consulte os dados da unidade e fale diretamente com a recepção para horários, disponibilidade e orientações de preparo.</p></div></div>
+          <div className="locations-grid">
+            <article className="location-card location-green" data-reveal>
+              <div className="location-meta"><span>SP</span><span>Consultas</span></div>
+              <h3>Santa Fé<br/>do Sul</h3>
+              <p>{locations.santaFe.address}</p>
+              <p className="location-hours">{editorial.practical.santaFeHours}</p>
+              <div className="location-actions"><a href={locations.santaFe.whatsapp} target="_blank" rel="noreferrer">WhatsApp <Arrow /></a><Link href="/santa-fe-do-sul">Ver unidade</Link></div>
+            </article>
+            <article className="location-card location-stone" data-reveal>
+              <div className="location-meta"><span>MG</span><span>Exames</span></div>
+              <h3>Iturama</h3>
+              <p><strong>{locations.iturama.facility}</strong><br/>{locations.iturama.address}</p>
+              <p className="location-hours">{editorial.practical.ituramaHours}</p>
+              <div className="location-actions"><a href={locations.iturama.whatsapp} target="_blank" rel="noreferrer">WhatsApp <Arrow /></a><Link href="/iturama">Ver unidade</Link></div>
+            </article>
+          </div>
+        </section>
+
+        <section className="content-teaser section-pad" data-reveal>
+          <div><p className="eyebrow"><span /> Conteúdo médico</p><h2>Informação para entender melhor sua <em>saúde digestiva.</em></h2></div>
+          <div><p>Artigos explicativos publicados pelo Dr. Pedro sobre sintomas, exames, prevenção e tratamentos.</p><Link className="btn btn-dark" href="/artigos">Ver conteúdos <Arrow /></Link></div>
+        </section>
+
+        <section className="section-pad faq-section" id="duvidas">
+          <div className="faq-heading" data-reveal><p className="eyebrow"><span /> Dúvidas frequentes</p><h2>Respostas <em>objetivas.</em></h2></div>
+          <div className="faq-list" data-reveal>
+            {homeFaq.map(([q, a], index) => <details key={q}><summary><span>0{index + 1}</span><strong>{q}</strong><i>+</i></summary><p>{a}</p></details>)}
+          </div>
+        </section>
+
+        <section className="final-cta section-pad" data-reveal>
+          <p className="eyebrow eyebrow-light"><span /> Agendamento</p>
+          <h2>Comece por uma avaliação <em>bem orientada.</em></h2>
+          <p>Escolha a cidade e fale diretamente com a recepção.</p>
+          <div><a href={locations.santaFe.whatsapp} target="_blank" rel="noreferrer">Santa Fé do Sul <Arrow /></a><a href={locations.iturama.whatsapp} target="_blank" rel="noreferrer">Iturama <Arrow /></a></div>
+        </section>
+      </main>
+      <JsonLd data={physicianSchema} />
+    </PublicShell>
+  );
 }

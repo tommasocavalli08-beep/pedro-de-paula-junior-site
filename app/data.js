@@ -1,56 +1,244 @@
 export const SITE_URL = 'https://pedro-de-paula-junior.vercel.app';
+export const EDITOR_PATH = '/pedro-editor-7c91f4a2';
 
-export const servicePages = {
+export const doctor = {
+  name: 'Dr. Pedro de Paula Junior',
+  shortName: 'Dr. Pedro',
+  specialty: 'Cirurgia Geral e Cirurgia do Aparelho Digestivo',
+  subtitle: 'Cirurgia videolaparoscópica, endoscopia e colonoscopia',
+  crmSP: 'CRM-SP 112723',
+  crmMG: 'CRM-MG 47662',
+  rqe: 'RQE 28023 / 28024',
+  email: 'pedropaulaj@gmail.com',
+  education: 'Faculdade de Medicina de São José do Rio Preto (FAMERP) — 2003',
+  training: [
+    'Residência em Cirurgia Geral — 2 anos',
+    'Residência em Cirurgia do Aparelho Digestivo — 2 anos',
+    'Estágio dedicado à Endoscopia e Colonoscopia — 1 ano',
+  ],
+};
+
+export const locations = {
+  santaFe: {
+    key: 'santa-fe-do-sul',
+    city: 'Santa Fé do Sul',
+    state: 'SP',
+    label: 'Consultas',
+    address: 'Rua Cinco, 1198, Centro, Santa Fé do Sul - SP, CEP 15775-041',
+    streetAddress: 'Rua Cinco, 1198',
+    locality: 'Santa Fé do Sul',
+    region: 'SP',
+    postalCode: '15775-041',
+    phoneDisplay: '(17) 3631-5442',
+    phoneE164: '+551736315442',
+    whatsapp: 'https://wa.me/551736315442?text=Ol%C3%A1%2C%20gostaria%20de%20agendar%20uma%20consulta%20com%20o%20Dr.%20Pedro%20de%20Paula%20Junior.',
+    maps: 'https://www.google.com/maps/search/?api=1&query=Rua+Cinco+1198+Centro+Santa+Fe+do+Sul+SP',
+    hours: 'Segunda a sexta, 08:00–11:00',
+    note: 'Horário cadastral do consultório; confirme a disponibilidade no agendamento.',
+  },
+  iturama: {
+    key: 'iturama',
+    city: 'Iturama',
+    state: 'MG',
+    label: 'Exames',
+    facility: 'Hospital Nossa Senhora Aparecida',
+    address: 'Rua Ituiutaba, 712, Centro, Iturama - MG, CEP 38280-000',
+    streetAddress: 'Rua Ituiutaba, 712',
+    locality: 'Iturama',
+    region: 'MG',
+    postalCode: '38280-000',
+    phoneDisplay: '(34) 3411-9900',
+    phoneE164: '+553434119900',
+    whatsapp: 'https://wa.me/553434119900?text=Ol%C3%A1%2C%20gostaria%20de%20informa%C3%A7%C3%B5es%20sobre%20exames%20com%20o%20Dr.%20Pedro%20de%20Paula%20Junior.',
+    maps: 'https://www.google.com/maps/search/?api=1&query=Hospital+Nossa+Senhora+Aparecida+Rua+Ituiutaba+712+Iturama+MG',
+    email: 'recepcao@hospitalnsa.com.br',
+    hours: 'Sob agendamento',
+    note: 'Consulte a recepção para disponibilidade e orientações de preparo.',
+  },
+};
+
+export const services = {
   'cirurgia-digestiva': {
-    title: 'Cirurgia Geral e Digestiva',
-    kicker: 'Cirurgia',
-    intro: 'Avaliação e tratamento cirúrgico de doenças do aparelho digestivo e da parede abdominal, com técnicas minimamente invasivas quando indicadas.',
-    image: '/images/pedro-endoscopy.webp',
+    title: 'Cirurgia Geral e do Aparelho Digestivo',
+    short: 'Cirurgia digestiva',
+    eyebrow: 'Cirurgia',
+    summary: 'Avaliação e tratamento cirúrgico de doenças do aparelho digestivo e da parede abdominal, com técnica definida de forma individual.',
+    image: '/images/pedro-surgery.webp',
     imageAlt: 'Dr. Pedro de Paula Junior em ambiente cirúrgico',
+    intro: 'A avaliação cirúrgica reúne sintomas, histórico, exame físico e exames complementares para definir se existe indicação de cirurgia e qual abordagem faz sentido para cada caso.',
     body: [
-      'A consulta cirúrgica começa pela compreensão dos sintomas, do histórico do paciente e dos exames já realizados. A indicação de cirurgia só acontece quando o benefício esperado supera os riscos e quando existe uma alternativa adequada para o caso.',
-      'Entre as condições avaliadas estão hérnias da parede abdominal, doenças da vesícula, problemas do estômago e intestino, hemorroidas, fístulas, fissuras anais e cisto pilonidal.',
-      'Quando apropriado, a cirurgia videolaparoscópica pode reduzir o tamanho das incisões e favorecer uma recuperação mais confortável. A escolha da técnica é individual e depende do diagnóstico e das condições clínicas do paciente.'
+      'O Dr. Pedro atua em cirurgia geral e cirurgia do aparelho digestivo, incluindo procedimentos de vesícula, estômago, intestino e parede abdominal. Quando apropriada, a videolaparoscopia pode ser utilizada como via de acesso minimamente invasiva.',
+      'A decisão cirúrgica depende do diagnóstico, do risco clínico, das alternativas de tratamento e dos objetivos definidos na consulta. Nem toda condição gastrointestinal exige cirurgia.',
     ],
-    points: ['Hérnias umbilical, inguinal, epigástrica e incisional', 'Cirurgia da vesícula', 'Cirurgias do estômago e intestino', 'Cirurgia videolaparoscópica', 'Doenças anorretais']
+    points: ['Cirurgia videolaparoscópica', 'Cirurgias do estômago e intestino', 'Cirurgia de vesícula', 'Hérnias da parede abdominal', 'Cisto pilonidal'],
+    faq: [
+      ['Toda doença do aparelho digestivo precisa de cirurgia?', 'Não. A indicação é individual e depende do diagnóstico, da evolução e das alternativas de tratamento disponíveis.'],
+      ['Videolaparoscopia é indicada para todos os casos?', 'Não. A via de acesso é definida após avaliação médica, considerando o procedimento e as condições clínicas do paciente.'],
+    ],
+  },
+  'cirurgia-de-hernias': {
+    title: 'Cirurgia de Hérnias da Parede Abdominal',
+    short: 'Cirurgia de hérnias',
+    eyebrow: 'Parede abdominal',
+    summary: 'Avaliação de hérnias umbilicais, inguinais, epigástricas e incisionais, com planejamento cirúrgico conforme o tipo de hérnia e o perfil do paciente.',
+    image: '/images/pedro-surgery.webp',
+    imageAlt: 'Dr. Pedro de Paula Junior durante procedimento cirúrgico',
+    intro: 'Hérnias acontecem quando estruturas internas protrudem por uma região de menor resistência da parede abdominal. O tratamento é definido conforme sintomas, tamanho, localização e risco de complicações.',
+    body: [
+      'Entre os tipos avaliados estão hérnia umbilical, inguinal, epigástrica e incisional. A consulta ajuda a diferenciar hérnia de outras causas de dor ou abaulamento e a organizar os exames necessários.',
+      'Quando existe indicação de correção cirúrgica, a técnica e a via de acesso são escolhidas individualmente. O acompanhamento inclui orientação pré-operatória e retorno após o procedimento.',
+    ],
+    points: ['Hérnia inguinal', 'Hérnia umbilical', 'Hérnia epigástrica', 'Hérnia incisional'],
+    faq: [],
+  },
+  'cirurgia-de-vesicula': {
+    title: 'Cirurgia de Vesícula Biliar',
+    short: 'Cirurgia de vesícula',
+    eyebrow: 'Cirurgia digestiva',
+    summary: 'Avaliação de cálculos e doenças da vesícula biliar, com indicação de colecistectomia quando o quadro clínico justificar.',
+    image: '/images/pedro-surgery.webp',
+    imageAlt: 'Dr. Pedro de Paula Junior em procedimento cirúrgico',
+    intro: 'Cálculos na vesícula podem ser assintomáticos ou causar crises de dor e complicações. A necessidade de cirurgia é definida a partir dos sintomas, exames e histórico do paciente.',
+    body: [
+      'A colecistectomia é a retirada cirúrgica da vesícula biliar. Em muitos casos pode ser realizada por videolaparoscopia, mas a indicação e a técnica devem ser individualizadas.',
+      'Na consulta são revisados os exames, os episódios de dor, possíveis sinais de inflamação e outras condições que influenciam o planejamento do tratamento.',
+    ],
+    points: ['Cálculos biliares', 'Colecistite', 'Colecistectomia', 'Avaliação pré-operatória'],
+    faq: [],
   },
   'endoscopia-digestiva': {
     title: 'Endoscopia Digestiva Alta',
-    kicker: 'Endoscopia',
-    intro: 'Exame para investigar o esôfago, o estômago e o duodeno, com possibilidade de diagnóstico e tratamento durante o procedimento.',
+    short: 'Endoscopia',
+    eyebrow: 'Diagnóstico e tratamento',
+    summary: 'Exame do esôfago, estômago e duodeno para investigação de sintomas, diagnóstico e realização de procedimentos quando indicados.',
     image: '/images/pedro-endoscopy.webp',
-    imageAlt: 'Dr. Pedro de Paula Junior realizando procedimento endoscópico',
+    imageAlt: 'Dr. Pedro de Paula Junior em sala de endoscopia',
+    intro: 'A endoscopia digestiva alta permite visualizar o trato digestivo superior e pode ser utilizada na investigação de refluxo, dor, dificuldade para engolir, sangramento e outras alterações.',
     body: [
-      'A endoscopia digestiva alta permite visualizar diretamente a mucosa do trato digestivo superior e investigar sintomas como dor, azia, refluxo, dificuldade para engolir e sangramento.',
-      'Além da avaliação diagnóstica, o procedimento pode permitir biópsias e intervenções terapêuticas conforme a indicação médica.',
-      'O preparo, a sedação e os cuidados após o exame são orientados pela equipe de acordo com o perfil de cada paciente.'
+      'O exame também pode incluir biópsias e procedimentos terapêuticos conforme a indicação, como tratamento endoscópico de sangramento, retirada de pólipos e mucosectomia de lesões selecionadas.',
+      'O preparo e os cuidados após o exame são orientados pela equipe de acordo com o procedimento e o perfil do paciente.',
     ],
-    points: ['Investigação de refluxo e outras alterações', 'Biópsias quando indicadas', 'Tratamento de sangramentos', 'Retirada de pólipos', 'Mucosectomia de lesões selecionadas']
+    points: ['Diagnóstico de doenças do esôfago, estômago e duodeno', 'Biópsias quando indicadas', 'Tratamento de sangramentos', 'Retirada de pólipos gástricos', 'Mucosectomia de lesões selecionadas', 'Ligadura e esclerose de varizes esofágicas'],
+    faq: [
+      ['A endoscopia pode realizar tratamento durante o exame?', 'Em situações selecionadas, sim. O procedimento pode permitir intervenções terapêuticas, de acordo com a indicação médica e os achados do exame.'],
+    ],
   },
   colonoscopia: {
     title: 'Colonoscopia',
-    kicker: 'Prevenção e diagnóstico',
-    intro: 'Exame do cólon e do intestino distal para investigar sintomas, detectar alterações e atuar na prevenção do câncer colorretal.',
+    short: 'Colonoscopia',
+    eyebrow: 'Prevenção e diagnóstico',
+    summary: 'Exame do intestino grosso utilizado para investigação de sintomas, rastreamento e remoção de pólipos quando indicada.',
     image: '/images/pedro-endoscopy.webp',
-    imageAlt: 'Estrutura utilizada pelo Dr. Pedro de Paula Junior em exames digestivos',
+    imageAlt: 'Dr. Pedro de Paula Junior em ambiente de endoscopia',
+    intro: 'A colonoscopia permite examinar o cólon e parte final do intestino delgado. Pode ser indicada na investigação de sangramento, mudança do hábito intestinal, anemia e em programas de rastreamento colorretal.',
     body: [
-      'A colonoscopia é um dos principais exames para avaliação do intestino grosso. Ela pode ser indicada na investigação de sangramento, mudança do hábito intestinal, anemia, dor e em programas de rastreamento.',
-      'Durante o exame, pólipos e algumas lesões podem ser removidos para análise, ajudando na prevenção e no diagnóstico precoce de doenças colorretais.',
-      'A qualidade do preparo intestinal é fundamental para que o exame seja completo. Por isso, a equipe fornece orientações específicas antes do procedimento.'
+      'Durante o exame podem ser realizadas biópsias, polipectomia e mucosectomia de lesões selecionadas, quando clinicamente indicadas.',
+      'Um preparo intestinal adequado é essencial para a qualidade do exame. As instruções são fornecidas pela equipe antes do procedimento.',
     ],
-    points: ['Rastreamento colorretal', 'Polipectomia', 'Mucosectomia de lesões selecionadas', 'Investigação de sintomas intestinais', 'Diagnóstico de tumores do intestino']
+    points: ['Rastreamento colorretal', 'Diagnóstico de tumores intestinais', 'Polipectomia', 'Mucosectomia de lesões selecionadas', 'Investigação de sangramento e alterações intestinais'],
+    faq: [
+      ['Por que o preparo intestinal é importante?', 'Porque a limpeza adequada do cólon melhora a visualização da mucosa e a qualidade diagnóstica do exame.'],
+    ],
   },
-  'saude-gastrointestinal': {
-    title: 'Saúde Gastrointestinal',
-    kicker: 'Cuidado clínico',
-    intro: 'Avaliação integrada de sintomas gastrointestinais para definir investigação, tratamento e acompanhamento individual.',
+  'refluxo-gastrite-ulceras': {
+    title: 'Refluxo, Gastrites e Úlceras',
+    short: 'Refluxo e gastrites',
+    eyebrow: 'Saúde gastrointestinal',
+    summary: 'Investigação e acompanhamento de refluxo gastroesofágico, esofagite, gastrites, úlceras pépticas e sintomas do trato digestivo superior.',
     image: '/images/pedro-consultation.webp',
-    imageAlt: 'Dr. Pedro de Paula Junior durante atendimento em consultório',
+    imageAlt: 'Dr. Pedro de Paula Junior durante consulta',
+    intro: 'Azia, queimação, dor, empachamento, náusea ou dificuldade para engolir podem ter causas diferentes. A avaliação organiza os sintomas e define quando exames como endoscopia são necessários.',
     body: [
-      'Sintomas digestivos podem ter causas variadas e nem sempre exigem cirurgia. A consulta organiza os sinais, o histórico, os hábitos e os exames para chegar a um plano de investigação coerente.',
-      'Entre as condições acompanhadas estão refluxo, gastrites, úlceras, constipação, diarreias, disbiose intestinal e SIBO.',
-      'Quando necessário, exames complementares como endoscopia, colonoscopia e teste de hidrogênio expirado ajudam a esclarecer o diagnóstico.'
+      'O acompanhamento inclui quadros de refluxo, gastrites, úlceras pépticas e esofagite eosinofílica, com tratamento individualizado conforme diagnóstico e gravidade.',
+      'Sinais de alarme, histórico familiar, idade e resposta a tratamentos anteriores ajudam a definir a estratégia de investigação.',
     ],
-    points: ['Refluxo e esofagite', 'Gastrites e úlceras', 'Constipação e diarreias', 'Disbiose intestinal', 'SIBO e intolerâncias alimentares']
-  }
+    points: ['Refluxo gastroesofágico', 'Esofagites', 'Gastrites', 'Úlcera péptica', 'Esofagite eosinofílica'],
+    faq: [],
+  },
+  'hemorroidas-fissuras-fistulas': {
+    title: 'Hemorroidas, Fissuras e Fístulas Anais',
+    short: 'Doenças anorretais',
+    eyebrow: 'Proctologia cirúrgica',
+    summary: 'Avaliação de sintomas anorretais e definição de tratamento clínico ou procedural conforme o diagnóstico.',
+    image: '/images/pedro-consultation.webp',
+    imageAlt: 'Dr. Pedro de Paula Junior em atendimento médico',
+    intro: 'Dor, sangramento, coceira, secreção e desconforto anal podem ter causas diferentes. A avaliação correta evita tratar sintomas semelhantes como se fossem a mesma condição.',
+    body: [
+      'O Dr. Pedro realiza tratamento de hemorroidas, incluindo ligadura elástica e cirurgia quando indicadas, além do acompanhamento de fissuras e fístulas anais.',
+      'O tratamento é escolhido conforme a causa, intensidade dos sintomas, anatomia da lesão e resposta a medidas conservadoras.',
+    ],
+    points: ['Ligadura elástica de hemorroidas', 'Cirurgia de hemorroidas', 'Tratamento de fissura anal', 'Tratamento de fístula anal'],
+    faq: [],
+  },
+  'sibo-disbiose-intolerancias': {
+    title: 'SIBO, Disbiose e Intolerâncias Alimentares',
+    short: 'SIBO e intolerâncias',
+    eyebrow: 'Saúde intestinal',
+    summary: 'Investigação de sintomas como distensão, gases, alterações do hábito intestinal e suspeita de intolerâncias ou SIBO.',
+    image: '/images/pedro-consultation.webp',
+    imageAlt: 'Dr. Pedro de Paula Junior conversando com paciente',
+    intro: 'Sintomas intestinais podem ter várias causas e exigem correlação com alimentação, medicamentos, histórico e exames. O diagnóstico não deve ser baseado apenas em sintomas isolados.',
+    body: [
+      'A avaliação pode incluir investigação de SIBO, disbiose intestinal, intolerância à lactose e outras causas de distensão, diarreia ou constipação.',
+      'Quando indicado, o teste de hidrogênio expirado pode fazer parte da investigação de intolerâncias e supercrescimento bacteriano do intestino delgado.',
+    ],
+    points: ['SIBO', 'Disbiose intestinal', 'Intolerância à lactose', 'Constipação intestinal', 'Diarreias recorrentes'],
+    faq: [],
+  },
+  'teste-hidrogenio-expirado': {
+    title: 'Teste de Hidrogênio Expirado',
+    short: 'Teste respiratório',
+    eyebrow: 'Exame funcional',
+    summary: 'Teste respiratório utilizado na investigação de intolerâncias alimentares e de SIBO em situações selecionadas.',
+    image: '/images/pedro-endoscopy.webp',
+    imageAlt: 'Estrutura de exames utilizada na prática do Dr. Pedro de Paula Junior',
+    intro: 'O teste mede gases eliminados na respiração após a ingestão de um substrato específico, seguindo protocolo definido para a hipótese diagnóstica.',
+    body: [
+      'Pode ser utilizado na investigação de intolerância à lactose e SIBO, conforme indicação médica. O resultado deve ser interpretado junto com sintomas e contexto clínico.',
+      'As orientações de dieta, jejum e suspensão de determinados medicamentos antes do teste são importantes para reduzir interferências no resultado.',
+    ],
+    points: ['Investigação de intolerância à lactose', 'Investigação de SIBO', 'Teste não invasivo', 'Preparo orientado pela equipe'],
+    faq: [],
+  },
+  'pequenas-cirurgias': {
+    title: 'Pequenas Cirurgias',
+    short: 'Pequenas cirurgias',
+    eyebrow: 'Procedimentos',
+    summary: 'Avaliação e retirada de lesões cutâneas e subcutâneas selecionadas, conforme indicação clínica.',
+    image: '/images/pedro-portrait.webp',
+    imageAlt: 'Dr. Pedro de Paula Junior',
+    intro: 'Algumas lesões de pele e tecido subcutâneo podem ser tratadas com procedimentos de pequeno porte após avaliação clínica.',
+    body: [
+      'Entre os procedimentos informados estão retirada de verrugas, pintas selecionadas, tumores de pele, cistos epidérmicos, lipomas e correção de lóbulo rasgado (lobuloplastia).',
+      'A indicação depende da avaliação da lesão. Quando necessário, o material retirado pode ser encaminhado para análise anatomopatológica conforme conduta médica.',
+    ],
+    points: ['Verrugas', 'Pintas selecionadas', 'Tumores de pele', 'Cistos epidérmicos', 'Lipomas', 'Lobuloplastia'],
+    faq: [],
+  },
+};
+
+export const featuredServiceSlugs = [
+  'cirurgia-digestiva',
+  'endoscopia-digestiva',
+  'colonoscopia',
+  'sibo-disbiose-intolerancias',
+  'hemorroidas-fissuras-fistulas',
+  'pequenas-cirurgias',
+];
+
+export const homeFaq = [
+  ['Quais áreas o Dr. Pedro atende?', 'Cirurgia geral, cirurgia do aparelho digestivo, cirurgia videolaparoscópica, endoscopia digestiva alta, colonoscopia e acompanhamento de diferentes condições gastrointestinais.'],
+  ['Onde são realizadas as consultas?', 'As consultas são realizadas em Santa Fé do Sul (SP), na Rua Cinco, 1198, Centro.'],
+  ['Onde são realizados os exames em Iturama?', 'No Hospital Nossa Senhora Aparecida, Rua Ituiutaba, 712, Centro, Iturama (MG), conforme agendamento e disponibilidade da instituição.'],
+  ['Como agendar?', 'Use os botões de WhatsApp da unidade desejada ou ligue diretamente para a recepção.'],
+  ['O site substitui uma consulta?', 'Não. O conteúdo é informativo e não substitui avaliação médica individual, diagnóstico ou indicação de tratamento.'],
+];
+
+export const defaultEditorial = {
+  updatedAt: null,
+  practical: {
+    santaFeHours: locations.santaFe.hours,
+    ituramaHours: locations.iturama.hours,
+  },
+  articles: [],
 };
