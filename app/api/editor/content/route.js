@@ -9,6 +9,7 @@ export const revalidate = 0;
 const NO_STORE = { 'Cache-Control': 'no-store, no-cache, must-revalidate, max-age=0' };
 
 export async function GET() {
+  console.info('EDITORIAL_STORAGE_ENV_KEYS', Object.keys(process.env).filter((key) => /BLOB|OIDC/i.test(key)).sort().join(','));
   const storageReady = hasEditorialStorage();
   const data = await getEditorialContent({ fresh: true });
   return NextResponse.json({ ok: true, storageReady, data }, { headers: NO_STORE });
