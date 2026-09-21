@@ -4,6 +4,7 @@ import { getEditorialContent, normalizeEditorial, EDITORIAL_PATHNAME, hasEditori
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
+// Storage binding refresh
 
 const NO_STORE = { 'Cache-Control': 'no-store, no-cache, must-revalidate, max-age=0' };
 
