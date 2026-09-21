@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { put, get, del } from '@vercel/blob';
+import { put } from '@vercel/blob';
 import { getEditorialContent, normalizeEditorial, EDITORIAL_PATHNAME, hasEditorialStorage } from '@/lib/editorial';
 
 export const dynamic = 'force-dynamic';
@@ -8,32 +8,11 @@ export const revalidate = 0;
 
 const NO_STORE = { 'Cache-Control': 'no-store, no-cache, must-revalidate, max-age=0' };
 
-export async function GET(request) {
-  const url = new URL(request.url);
-  if (url.searchParams.get('probe') === '1') {
-    const pathname = 'pedro-de-paula-junior/_storage-probe.txt';
-    try {
-      await put(pathname, 'ok', {
-        access: 'private',
-        allowOverwrite: true,
-        addRandomSuffix: false,
-        contentType: 'text/plain; charset=utf-8',
-      });
-      const result = await get(pathname, { access: 'private', useCache: false });
-      const text = result?.stream ? await new Response(result.stream).text() : '';
-      await del(pathname);
-      return NextResponse.json({ ok: text === 'ok', storageReady: true, writeReadDelete: text === 'ok' }, { headers: NO_STORE });
-    } catch (error) {
-      console.error('EDITORIAL_STORAGE_PROBE_FAILED', error?.message || error);
-      return NextResponse.json({ ok: false, storageReady: true, writeReadDelete: false, detail: error?.message || 'Probe failed' }, { status: 503, headers: NO_STORE });
-    }
-  }
-
+export async function GET() {
   const storageReady = hasEditorialStorage();
   const data = await getEditorialContent({ fresh: true });
   return NextResponse.json({ ok: true, storageReady, data }, { headers: NO_STORE });
 }
-
 export async function PUT(request) {
   try {
     if (!hasEditorialStorage()) {
