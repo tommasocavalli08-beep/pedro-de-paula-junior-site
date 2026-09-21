@@ -2,6 +2,8 @@
 
 import { useEffect, useMemo, useState } from 'react';
 
+const LOCAL_BACKUP_KEY = 'pedro-editorial-backup-v1';
+
 const blankArticle = () => ({
   slug: '', title: '', category: 'Saúde digestiva', date: new Date().toISOString().slice(0, 10), description: '', intro: '', coverImage: '', videoUrl: '', sections: [{ heading: '', text: '' }], faq: [],
 });
@@ -16,14 +18,28 @@ export default function EditorPage() {
   const [draft, setDraft] = useState(blankArticle());
   const [status, setStatus] = useState('Carregando conteúdo…');
   const [saving, setSaving] = useState(false);
+  const [storageReady, setStorageReady] = useState(null);
 
   async function load() {
     try {
       const res = await fetch('/api/editor/content', { cache: 'no-store' });
       const json = await res.json();
       if (!json.ok) throw new Error(json.error || 'Falha ao carregar');
-      setData(json.data);
-      setStatus('Conteúdo carregado.');
+      setStorageReady(Boolean(json.storageReady));
+
+      let nextData = json.data;
+      try {
+        const local = JSON.parse(window.localStorage.getItem(LOCAL_BACKUP_KEY) || 'null');
+        if (json.data.articles.length === 0 && local?.articles?.length > 0) {
+          nextData = local;
+          setStatus('Rascunho recuperado deste navegador. Ainda não está publicado no site.');
+        } else {
+          setStatus(json.storageReady ? 'Conteúdo carregado e armazenamento conectado.' : 'Editor carregado, mas a publicação está desconectada.');
+        }
+      } catch {
+        setStatus(json.storageReady ? 'Conteúdo carregado.' : 'Editor carregado, mas a publicação está desconectada.');
+      }
+      setData(nextData);
     } catch (e) { setStatus(e.message); }
   }
 
@@ -45,6 +61,7 @@ export default function EditorPage() {
     if (selected === -1) articles.unshift(article); else if (hasSelection) articles[selected] = article;
     const next = { ...data, articles };
     setData(next);
+    try { window.localStorage.setItem(LOCAL_BACKUP_KEY, JSON.stringify(next)); } catch {}
     setSelected(articles.indexOf(article));
     setDraft(article);
     return next;
@@ -56,9 +73,19 @@ export default function EditorPage() {
     try {
       const res = await fetch('/api/editor/content', { method: 'PUT', headers: { 'content-type': 'application/json' }, body: JSON.stringify(payload) });
       const json = await res.json();
-      if (!res.ok || !json.ok) throw new Error(json.error || 'Falha ao salvar');
-      setData(json.data); setStatus('Publicado. As alterações já estão disponíveis no site.');
-    } catch (e) { setStatus(e.message); }
+      if (!res.ok || !json.ok || !json.verified) {
+        const message = [json.error, json.detail].filter(Boolean).join(' ');
+        throw new Error(message || 'Falha ao salvar');
+      }
+      setStorageReady(true);
+      setData(json.data);
+      try { window.localStorage.setItem(LOCAL_BACKUP_KEY, JSON.stringify(json.data)); } catch {}
+      setStatus(`Publicado e verificado. ${json.data.articles.length} artigo(s) disponível(is) no site.`);
+    } catch (e) {
+      setStorageReady(false);
+      try { window.localStorage.setItem(LOCAL_BACKUP_KEY, JSON.stringify(payload)); } catch {}
+      setStatus(`NÃO PUBLICADO — ${e.message} O conteúdo ficou salvo como rascunho neste navegador.`);
+    }
     finally { setSaving(false); }
   }
 
@@ -79,7 +106,12 @@ export default function EditorPage() {
         <a href="/" target="_blank" rel="noreferrer">Abrir site ↗</a>
       </header>
 
-      <div className="editor-warning"><strong>Link reservado.</strong> Esta área não tem login por solicitação do proprietário. Qualquer pessoa com este endereço consegue editar o conteúdo; não compartilhe o link.</div>
+      <div className={`editor-warning ${storageReady === false ? 'editor-warning-error' : ''}`}>
+        <strong>{storageReady === false ? 'Publicação desconectada.' : 'Link reservado.'}</strong>{' '}
+        {storageReady === false
+          ? 'Os rascunhos ficam preservados neste navegador, mas não aparecem no site até o armazenamento ser conectado.'
+          : 'Esta área não tem login por solicitação do proprietário. Qualquer pessoa com este endereço consegue editar o conteúdo; não compartilhe o link.'}
+      </div>
 
       <div className="editor-layout">
         <aside className="editor-sidebar">
