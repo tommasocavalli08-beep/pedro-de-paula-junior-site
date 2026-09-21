@@ -1,14 +1,14 @@
 import Link from 'next/link';
 import { doctor, locations } from './data';
 
-export function Arrow() { return <span aria-hidden="true">↗</span>; }
+export function Arrow() { return <span className="arrow-glyph" aria-hidden="true">↗</span>; }
 
 export function Brand({ compact = false }) {
   return (
     <Link href="/" className={`brand ${compact ? 'compact' : ''}`} aria-label="Dr. Pedro de Paula Junior — início">
       <span className="brand-mark">P</span>
       <span className="brand-copy">
-        <strong>Dr. Pedro</strong>
+        <strong>Dr. Pedro de Paula Junior</strong>
         <small>Cirurgia Digestiva</small>
       </span>
     </Link>
@@ -26,7 +26,19 @@ export function SiteHeader() {
         <Link href="/artigos">Conteúdos</Link>
         <Link href="/#locais">Locais</Link>
       </nav>
-      <a className="header-cta" href={locations.santaFe.whatsapp} target="_blank" rel="noreferrer">Agendar <Arrow /></a>
+      <div className="header-actions">
+        <details className="mobile-menu">
+          <summary aria-label="Abrir menu">Menu</summary>
+          <div className="mobile-menu-panel">
+            <Link href="/#atuacao">Atuação</Link>
+            <Link href="/#sobre">Sobre</Link>
+            <Link href="/#exames">Exames</Link>
+            <Link href="/artigos">Conteúdos</Link>
+            <Link href="/#locais">Locais</Link>
+          </div>
+        </details>
+        <a className="header-cta" href={locations.santaFe.whatsapp} target="_blank" rel="noreferrer">Agendar <Arrow /></a>
+      </div>
     </header>
   );
 }
@@ -61,8 +73,8 @@ export function Footer() {
 export function MobileContact() {
   return (
     <div className="mobile-contact" aria-label="Atalhos de contato">
-      <a href={locations.santaFe.whatsapp} target="_blank" rel="noreferrer">Santa Fé · WhatsApp</a>
-      <a href={locations.iturama.whatsapp} target="_blank" rel="noreferrer">Iturama · WhatsApp</a>
+      <a href={locations.santaFe.whatsapp} target="_blank" rel="noreferrer"><span>SP</span> Santa Fé · WhatsApp</a>
+      <a href={locations.iturama.whatsapp} target="_blank" rel="noreferrer"><span>MG</span> Iturama · WhatsApp</a>
     </div>
   );
 }
@@ -70,7 +82,6 @@ export function MobileContact() {
 export function JsonLd({ data }) {
   return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }} />;
 }
-
 
 export function PublicShell({ children }) {
   return (
