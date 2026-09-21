@@ -83,8 +83,18 @@ const physicianSchema = {
 
 export const dynamic = 'force-dynamic';
 
+function formatDate(value) {
+  if (!value) return 'Conteúdo médico';
+  const d = new Date(`${value}T12:00:00`);
+  if (Number.isNaN(d.getTime())) return value;
+  return new Intl.DateTimeFormat('pt-BR', { day: '2-digit', month: 'short', year: 'numeric' }).format(d);
+}
+
 export default async function Home() {
   const editorial = await getEditorialContent({ fresh: true });
+  const featuredArticles = [...editorial.articles]
+    .sort((a, b) => String(b.date).localeCompare(String(a.date)))
+    .slice(0, 4);
   return (
     <PublicShell>
       <main id="conteudo">
@@ -134,6 +144,39 @@ export default async function Home() {
             })}
           </div>
           <div className="services-more" data-reveal><Link href="/servicos/cirurgia-de-vesicula">Cirurgia de vesícula</Link><Link href="/servicos/refluxo-gastrite-ulceras">Refluxo, gastrites e úlceras</Link><Link href="/servicos/teste-hidrogenio-expirado">Teste de hidrogênio expirado</Link></div>
+        </section>
+
+        <section className="home-articles section-pad" id="artigos">
+          <div className="home-articles-head" data-reveal>
+            <div>
+              <p className="eyebrow"><span /> Conteúdo médico</p>
+              <h2>Artigos para entender melhor sua <em>saúde digestiva.</em></h2>
+            </div>
+            <div>
+              <p>Informações objetivas sobre sintomas, exames, prevenção e tratamentos.</p>
+              <Link className="text-link" href="/artigos">Ver todos os artigos <Arrow /></Link>
+            </div>
+          </div>
+          <div className="home-articles-grid">
+            {featuredArticles.map((article, index) => (
+              <Link className="home-article-card" href={`/artigos/${article.slug}`} key={article.slug} data-reveal>
+                <div className="home-article-number">0{index + 1}</div>
+                <div className="home-article-meta">
+                  <span>{article.category}</span>
+                  <time>{formatDate(article.date)}</time>
+                </div>
+                <h3>{article.title}</h3>
+                <p>{article.description || article.intro}</p>
+                <span className="home-article-link">Ler artigo <Arrow /></span>
+              </Link>
+            ))}
+          </div>
+          {featuredArticles.length === 0 && (
+            <div className="home-articles-empty" data-reveal>
+              <p>Novos conteúdos médicos serão publicados em breve.</p>
+              <Link className="text-link" href="/artigos">Ir para conteúdos <Arrow /></Link>
+            </div>
+          )}
         </section>
 
         <section className="about-section section-pad" id="sobre">
@@ -200,11 +243,6 @@ export default async function Home() {
               <div className="location-actions"><a href={locations.iturama.whatsapp} target="_blank" rel="noreferrer">WhatsApp <Arrow /></a><Link href="/iturama">Ver unidade</Link></div>
             </article>
           </div>
-        </section>
-
-        <section className="content-teaser section-pad" data-reveal>
-          <div><p className="eyebrow"><span /> Conteúdo médico</p><h2>Informação para entender melhor sua <em>saúde digestiva.</em></h2></div>
-          <div><p>Artigos explicativos publicados pelo Dr. Pedro sobre sintomas, exames, prevenção e tratamentos.</p><Link className="btn btn-dark" href="/artigos">Ver conteúdos <Arrow /></Link></div>
         </section>
 
         <section className="section-pad faq-section" id="duvidas">
