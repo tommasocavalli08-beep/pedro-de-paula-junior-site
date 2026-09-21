@@ -64,7 +64,12 @@ export function Footer() {
       </div>
       <div className="footer-bottom">
         <span>© {new Date().getFullYear()} Dr. Pedro de Paula Junior</span>
-        <a href="https://www.nova-web.it/" target="_blank" rel="noreferrer">Made by <strong>NovaWeb</strong></a>
+        <a className="novaweb-button" href="https://www.nova-web.it/" target="_blank" rel="noreferrer" aria-label="Site desenvolvido pela NovaWeb">
+          <span className="novaweb-label">Made by</span>
+          <span className="novaweb-mark">N</span>
+          <strong>NovaWeb</strong>
+          <Arrow />
+        </a>
       </div>
     </footer>
   );
