@@ -61,7 +61,7 @@ export default async function ServicePage({ params }) {
             <p className="eyebrow"><span /> {service.eyebrow}</p>
             <h1>{service.title}</h1>
             <p>{service.summary}</p>
-            <div className="hero-actions"><a className="btn btn-dark" href={locations.santaFe.whatsapp} target="_blank" rel="noreferrer">Agendar avaliação <Arrow /></a><Link className="btn btn-ghost" href="/#atuacao">Ver outras áreas</Link></div>
+            <div className="hero-actions"><a className="btn btn-dark" href={locations.santaFe.whatsapp} target="_blank" rel="noreferrer">Falar com a recepção no WhatsApp <Arrow /></a><Link className="btn btn-ghost" href="/#atuacao">Ver outras áreas</Link></div>
           </div>
           <div className="service-hero-image" data-reveal><Image src={service.image} alt={service.imageAlt} fill priority sizes="(max-width: 860px) 92vw, 44vw" className="cover"/></div>
         </section>
@@ -73,6 +73,7 @@ export default async function ServicePage({ params }) {
             <p className="medical-note">As informações acima são educativas e não substituem avaliação médica individual. Indicação de exames e tratamentos depende da consulta e do diagnóstico.</p>
           </div>
           <aside className="service-aside" data-reveal>
+            {service.reassurance && <div className="service-reassurance"><span>Antes do exame</span><strong>{service.reassurance.title}</strong><p>{service.reassurance.text}</p></div>}
             <span>Relacionados a esta área</span>
             <ul>{service.points.map((point) => <li key={point}>{point}</li>)}</ul>
           </aside>
