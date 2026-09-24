@@ -103,11 +103,11 @@ export default async function Home() {
           <div className="hero-backdrop hero-backdrop-b" />
           <div className="hero-home-copy" data-reveal>
             <p className="eyebrow"><span /> Cirurgia digestiva · Endoscopia · Colonoscopia</p>
-            <h1>Cuidado preciso para a sua <em>saúde digestiva.</em></h1>
-            <p className="hero-lead">Avaliação clínica e cirúrgica com explicações claras, investigação criteriosa e acompanhamento próximo em Santa Fé do Sul e Iturama.</p>
+            <h1>Entenda a causa dos sintomas e cuide da sua <em>saúde digestiva com segurança.</em></h1>
+            <p className="hero-lead">Dor, refluxo, alterações intestinais ou a necessidade de um exame podem gerar dúvidas. Aqui, cada caso é avaliado com explicações claras, investigação criteriosa e orientação individual.</p>
             <div className="hero-actions">
-              <a className="btn btn-dark" href={locations.santaFe.whatsapp} target="_blank" rel="noreferrer">Agendar consulta <Arrow /></a>
-              <a className="btn btn-ghost" href="#atuacao">Conhecer atuação</a>
+              <a className="btn btn-dark" href={locations.santaFe.whatsapp} target="_blank" rel="noreferrer">Falar com a recepção no WhatsApp <Arrow /></a>
+              <a className="btn btn-ghost" href="#atuacao">Ver áreas de atuação</a>
             </div>
             <div className="credential-row" aria-label="Registros profissionais">
               <span>{doctor.crmSP}</span><span>{doctor.crmMG}</span><span>{doctor.rqe}</span>
@@ -129,7 +129,7 @@ export default async function Home() {
         <section className="section-pad section-light" id="atuacao">
           <div className="section-heading" data-reveal>
             <p className="eyebrow"><span /> Áreas de atuação</p>
-            <div className="heading-split"><h2>Um cuidado completo, do sintoma à <em>decisão.</em></h2><p>Consulta, exames e cirurgia organizados em uma linha de cuidado coerente. Cada conduta depende do diagnóstico e do contexto clínico individual.</p></div>
+            <div className="heading-split"><h2>Avaliação, exames e tratamento com <em>clareza em cada etapa.</em></h2><p>Consulta, investigação e cirurgia são organizadas de acordo com o diagnóstico e o contexto clínico de cada paciente.</p></div>
           </div>
           <div className="services-grid">
             {featuredServiceSlugs.map((slug, index) => {
@@ -186,8 +186,8 @@ export default async function Home() {
           </div>
           <div className="about-copy" data-reveal>
             <p className="eyebrow eyebrow-light"><span /> Sobre o médico</p>
-            <h2>Técnica sólida.<br/><em>Presença humana.</em></h2>
-            <p className="about-quote">“Cuidar vai além da técnica: é ouvir, explicar e acompanhar cada etapa com clareza.”</p>
+            <h2>Experiência cirúrgica.<br/><em>Atendimento próximo.</em></h2>
+            <p className="about-quote">Consulta com escuta, explicação do diagnóstico e orientação clara sobre os próximos passos.</p>
             <p>O Dr. Pedro de Paula Junior é cirurgião geral e do aparelho digestivo, com atuação em cirurgia videolaparoscópica, endoscopia e colonoscopia. Formou-se pela FAMERP em 2003 e realizou residências em Cirurgia Geral e Cirurgia do Aparelho Digestivo, além de período dedicado à endoscopia e colonoscopia.</p>
             <div className="formation-grid">
               <div><strong>2003</strong><span>Graduação · FAMERP</span></div>
@@ -200,7 +200,7 @@ export default async function Home() {
         <section className="section-pad procedure-section" id="cirurgia">
           <div className="procedure-copy" data-reveal>
             <p className="eyebrow"><span /> Cirurgia</p>
-            <h2>Quando operar, <em>como operar</em> e por quê.</h2>
+            <h2>Avaliação cirúrgica com <em>indicação individualizada.</em></h2>
             <p>A indicação começa por uma avaliação bem feita. O objetivo é compreender a doença, revisar alternativas e definir a técnica adequada ao caso — incluindo videolaparoscopia quando indicada.</p>
             <div className="chips"><span>Hérnias</span><span>Vesícula</span><span>Estômago e intestino</span><span>Doenças anorretais</span><span>Cisto pilonidal</span></div>
             <Link className="text-link" href="/servicos/cirurgia-digestiva">Entender a cirurgia digestiva <Arrow /></Link>
@@ -215,9 +215,9 @@ export default async function Home() {
           <div className="exams-photo" data-reveal><Image src="/images/pedro-endoscopy.webp" alt="Dr. Pedro de Paula Junior em sala de endoscopia" fill sizes="(max-width: 860px) 100vw, 48vw" className="cover" /></div>
           <div className="exams-copy section-pad" data-reveal>
             <p className="eyebrow eyebrow-light"><span /> Exames digestivos</p>
-            <h2>Investigar bem para <em>decidir melhor.</em></h2>
-            <p>Endoscopia digestiva alta, colonoscopia e teste de hidrogênio expirado integram a investigação de diferentes sintomas e condições gastrointestinais.</p>
-            <div className="exams-list">
+            <h2>Exames digestivos com <em>orientação antes e depois.</em></h2>
+            <p>Endoscopia digestiva alta, colonoscopia e teste de hidrogênio expirado auxiliam na investigação de sintomas e condições gastrointestinais. Antes do exame, é importante entender o preparo, as etapas do procedimento e os cuidados posteriores.</p>
+            <div className="exam-reassurance"><strong>Está apreensivo com endoscopia ou colonoscopia?</strong><p>É comum ter dúvidas sobre preparo, desconforto e segurança. A equipe orienta cada etapa previamente e pode esclarecer o que esperar de acordo com o exame e o seu perfil clínico.</p></div><div className="exams-list">
               <Link href="/servicos/endoscopia-digestiva"><span>01</span><strong>Endoscopia digestiva alta</strong><Arrow /></Link>
               <Link href="/servicos/colonoscopia"><span>02</span><strong>Colonoscopia</strong><Arrow /></Link>
               <Link href="/servicos/teste-hidrogenio-expirado"><span>03</span><strong>Teste de hidrogênio expirado</strong><Arrow /></Link>
@@ -226,7 +226,7 @@ export default async function Home() {
         </section>
 
         <section className="section-pad locations-section" id="locais">
-          <div className="section-heading" data-reveal><p className="eyebrow"><span /> Onde atende</p><div className="heading-split"><h2>Duas cidades, uma linha de <em>cuidado.</em></h2><p>Consulte os dados da unidade e fale diretamente com a recepção para horários, disponibilidade e orientações de preparo.</p></div></div>
+          <div className="section-heading" data-reveal><p className="eyebrow"><span /> Onde atende</p><div className="heading-split"><h2>Consultas em Santa Fé do Sul e <em>exames em Iturama.</em></h2><p>Veja os dados de cada unidade e fale diretamente com a recepção para horários, disponibilidade e orientações de preparo.</p></div></div>
           <div className="locations-grid">
             <article className="location-card location-green" data-reveal>
               <div className="location-meta"><span>SP</span><span>Consultas</span></div>
@@ -246,7 +246,7 @@ export default async function Home() {
         </section>
 
         <section className="section-pad faq-section" id="duvidas">
-          <div className="faq-heading" data-reveal><p className="eyebrow"><span /> Dúvidas frequentes</p><h2>Respostas <em>objetivas.</em></h2></div>
+          <div className="faq-heading" data-reveal><p className="eyebrow"><span /> Dúvidas frequentes</p><h2>Informações importantes <em>antes de consultar ou realizar exames.</em></h2></div>
           <div className="faq-list" data-reveal>
             {homeFaq.map(([q, a], index) => <details key={q}><summary><span>0{index + 1}</span><strong>{q}</strong><i>+</i></summary><p>{a}</p></details>)}
           </div>
@@ -254,8 +254,8 @@ export default async function Home() {
 
         <section className="final-cta section-pad" data-reveal>
           <p className="eyebrow eyebrow-light"><span /> Agendamento</p>
-          <h2>Comece por uma avaliação <em>bem orientada.</em></h2>
-          <p>Escolha a cidade e fale diretamente com a recepção.</p>
+          <h2>Precisa esclarecer sintomas ou saber <em>qual atendimento procurar?</em></h2>
+          <p>Escolha a cidade e fale diretamente com a recepção pelo WhatsApp.</p>
           <div><a href={locations.santaFe.whatsapp} target="_blank" rel="noreferrer">Santa Fé do Sul <Arrow /></a><a href={locations.iturama.whatsapp} target="_blank" rel="noreferrer">Iturama <Arrow /></a></div>
         </section>
       </main>
