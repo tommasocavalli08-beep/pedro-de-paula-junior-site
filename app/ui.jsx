@@ -37,7 +37,7 @@ export function SiteHeader() {
             <Link href="/#locais">Locais</Link>
           </div>
         </details>
-        <a className="header-cta" href={locations.santaFe.whatsapp} target="_blank" rel="noreferrer">Agendar <Arrow /></a>
+        <a className="header-cta" href={locations.santaFe.whatsapp} target="_blank" rel="noreferrer">Falar no WhatsApp <Arrow /></a>
       </div>
     </header>
   );
