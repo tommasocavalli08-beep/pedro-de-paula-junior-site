@@ -110,34 +110,44 @@ export const services = {
     title: 'Endoscopia Digestiva Alta',
     short: 'Endoscopia',
     eyebrow: 'Diagnóstico e tratamento',
-    summary: 'Exame do esôfago, estômago e duodeno para investigação de sintomas, diagnóstico e realização de procedimentos quando indicados.',
+    summary: 'Avaliação endoscópica do esôfago, estômago e duodeno, com orientação prévia sobre preparo, etapas do exame e cuidados posteriores.',
     image: '/images/pedro-endoscopy.webp',
     imageAlt: 'Dr. Pedro de Paula Junior em sala de endoscopia',
-    intro: 'A endoscopia digestiva alta permite visualizar o trato digestivo superior e pode ser utilizada na investigação de refluxo, dor, dificuldade para engolir, sangramento e outras alterações.',
+    intro: 'A endoscopia digestiva alta permite visualizar o trato digestivo superior e pode ser utilizada na investigação de refluxo, dor, dificuldade para engolir, sangramento e outras alterações. Se houver receio em relação ao exame, as dúvidas sobre preparo, conforto e segurança devem ser esclarecidas previamente com a equipe.',
     body: [
       'O exame também pode incluir biópsias e procedimentos terapêuticos conforme a indicação, como tratamento endoscópico de sangramento, retirada de pólipos e mucosectomia de lesões selecionadas.',
       'O preparo e os cuidados após o exame são orientados pela equipe de acordo com o procedimento e o perfil do paciente.',
     ],
     points: ['Diagnóstico de doenças do esôfago, estômago e duodeno', 'Biópsias quando indicadas', 'Tratamento de sangramentos', 'Retirada de pólipos gástricos', 'Mucosectomia de lesões selecionadas', 'Ligadura e esclerose de varizes esofágicas'],
+    reassurance: {
+      title: 'Receio de fazer a endoscopia?',
+      text: 'É comum chegar ao exame com dúvidas. Antes do procedimento, confirme com a equipe as orientações de preparo, como o exame será conduzido e quais cuidados serão necessários depois. A condução varia conforme o serviço e as condições clínicas de cada paciente.',
+    },
     faq: [
       ['A endoscopia pode realizar tratamento durante o exame?', 'Em situações selecionadas, sim. O procedimento pode permitir intervenções terapêuticas, de acordo com a indicação médica e os achados do exame.'],
+      ['Estou com medo da endoscopia. Posso tirar dúvidas antes?', 'Sim. Informe à equipe o que está causando apreensão e peça orientações sobre preparo, conforto, segurança e cuidados após o procedimento. A condução depende do serviço e do perfil clínico individual.'],
     ],
   },
   colonoscopia: {
     title: 'Colonoscopia',
     short: 'Colonoscopia',
     eyebrow: 'Prevenção e diagnóstico',
-    summary: 'Exame do intestino grosso utilizado para investigação de sintomas, rastreamento e remoção de pólipos quando indicada.',
+    summary: 'Exame do intestino grosso para investigação, rastreamento e tratamento de alterações selecionadas, com preparo orientado previamente pela equipe.',
     image: '/images/pedro-endoscopy.webp',
     imageAlt: 'Dr. Pedro de Paula Junior em ambiente de endoscopia',
-    intro: 'A colonoscopia permite examinar o cólon e parte final do intestino delgado. Pode ser indicada na investigação de sangramento, mudança do hábito intestinal, anemia e em programas de rastreamento colorretal.',
+    intro: 'A colonoscopia permite examinar o cólon e parte final do intestino delgado. Pode ser indicada na investigação de sangramento, mudança do hábito intestinal, anemia e em programas de rastreamento colorretal. A preparação costuma gerar dúvidas, por isso as orientações devem ser revisadas com antecedência.',
     body: [
       'Durante o exame podem ser realizadas biópsias, polipectomia e mucosectomia de lesões selecionadas, quando clinicamente indicadas.',
       'Um preparo intestinal adequado é essencial para a qualidade do exame. As instruções são fornecidas pela equipe antes do procedimento.',
     ],
     points: ['Rastreamento colorretal', 'Diagnóstico de tumores intestinais', 'Polipectomia', 'Mucosectomia de lesões selecionadas', 'Investigação de sangramento e alterações intestinais'],
+    reassurance: {
+      title: 'A colonoscopia está gerando apreensão?',
+      text: 'O preparo e o próprio exame podem gerar insegurança. A equipe deve orientar antecipadamente como se preparar, o que levar, como será o fluxo do procedimento e quais cuidados seguir depois. Questões específicas de conforto e segurança precisam ser avaliadas de forma individual.',
+    },
     faq: [
       ['Por que o preparo intestinal é importante?', 'Porque a limpeza adequada do cólon melhora a visualização da mucosa e a qualidade diagnóstica do exame.'],
+      ['Tenho receio da colonoscopia. O que devo fazer?', 'Avise a equipe antes do procedimento e esclareça dúvidas sobre preparo, conforto, segurança e recuperação. As orientações podem variar conforme o serviço e as condições clínicas do paciente.'],
     ],
   },
   'refluxo-gastrite-ulceras': {
