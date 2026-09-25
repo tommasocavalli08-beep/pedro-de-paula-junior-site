@@ -123,7 +123,7 @@ export default async function Home() {
         </section>
 
         <div className="trust-strip" aria-label="Principais áreas">
-          <div><span>Cirurgia videolaparoscópica</span><i>✦</i><span>Endoscopia digestiva</span><i>✦</i><span>Colonoscopia</span><i>✦</i><span>Saúde intestinal</span><i>✦</i><span>Cirurgia de hérnias</span></div>
+          <div><span>Cirurgia videolaparoscópica</span><i>✦</i><span>Endoscopia digestiva</span><i>✦</i><span>Colonoscopia</span><i>✦</i><span>Saúde gastrointestinal</span><i>✦</i><span>Cirurgia de hérnias</span></div>
         </div>
 
         <section className="section-pad section-light" id="atuacao">
@@ -226,10 +226,10 @@ export default async function Home() {
         </section>
 
         <section className="section-pad locations-section" id="locais">
-          <div className="section-heading" data-reveal><p className="eyebrow"><span /> Onde atende</p><div className="heading-split"><h2>Consultas em Santa Fé do Sul e <em>exames em Iturama.</em></h2><p>Veja os dados de cada unidade e fale diretamente com a recepção para horários, disponibilidade e orientações de preparo.</p></div></div>
+          <div className="section-heading" data-reveal><p className="eyebrow"><span /> Onde atende</p><div className="heading-split"><h2>Consultas e exames em Santa Fé do Sul e <em>exames em Iturama.</em></h2><p>Veja os dados de cada unidade e fale diretamente com a recepção para horários, disponibilidade e orientações de preparo.</p></div></div>
           <div className="locations-grid">
             <article className="location-card location-green" data-reveal>
-              <div className="location-meta"><span>SP</span><span>Consultas</span></div>
+              <div className="location-meta"><span>SP</span><span>Consultas e exames</span></div>
               <h3>Santa Fé<br/>do Sul</h3>
               <p>{locations.santaFe.address}</p>
               <p className="location-hours">{editorial.practical.santaFeHours}</p>
